@@ -1,2 +1,2 @@
 # WeatherParser
-A Java base Parser for METAR and TAF Data
+A Java based Parser for METAR and TAF Data
