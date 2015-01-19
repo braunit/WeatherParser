@@ -31,17 +31,17 @@ import ca.braunit.weatherparser.metar.ExampleMessagesMetar;
 import ca.braunit.weatherparser.metar.MetarDecoder;
 import ca.braunit.weatherparser.metar.domain.Metar;
 
-public class PressureDecoderTest {
+public class RemarksDecoderTest {
 
 	@Test
 	/**
-	 * Check Pressure (Inch of Mercury)
+	 * Check Remarks
 	 * @throws DecoderException
 	 */
-	public void testPressureInchOfMercury() throws DecoderException {
+	public void testRemarks() throws DecoderException {
 		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
 		
-		assertEquals(1018, metar.getPressure().getPressure().intValue());
+		assertEquals("SF3SC3SC2 SLP181", metar.getRemarks().getRemarks());
 		
 	}
 

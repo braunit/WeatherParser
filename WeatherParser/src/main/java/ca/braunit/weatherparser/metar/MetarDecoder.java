@@ -26,6 +26,7 @@ import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.metar.domain.Metar;
 import ca.braunit.weatherparser.metar.util.CloudsDecoder;
 import ca.braunit.weatherparser.metar.util.PressureDecoder;
+import ca.braunit.weatherparser.metar.util.RemarksDecoder;
 import ca.braunit.weatherparser.metar.util.ReportTimeDecoder;
 import ca.braunit.weatherparser.metar.util.RunwayVisualRangeDecoder;
 import ca.braunit.weatherparser.metar.util.TemperatureAndDewPointDecoder;
@@ -71,6 +72,8 @@ public class MetarDecoder {
 		metar.setRecentWeather(WeatherDecoder.decodeObject(metarAsString, false));
 		
 		metar.setWindShear(WindShearDecoder.decodeObject(metarAsString));
+		
+		metar.setRemarks(RemarksDecoder.decodeObject(metarAsString));
 		
 		return metar;
 	}

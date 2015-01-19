@@ -22,27 +22,27 @@
  */
 package ca.braunit.weatherparser.metar.util;
 
-import static org.junit.Assert.assertEquals;
+import ca.braunit.weatherparser.metar.domain.Remarks;
 
-import org.junit.Test;
+public class RemarksDecoder {
 
-import ca.braunit.weatherparser.exception.DecoderException;
-import ca.braunit.weatherparser.metar.ExampleMessagesMetar;
-import ca.braunit.weatherparser.metar.MetarDecoder;
-import ca.braunit.weatherparser.metar.domain.Metar;
+	private static final String REMARKS_PATTERN = "RMK .*";
 
-public class PressureDecoderTest {
-
-	@Test
-	/**
-	 * Check Pressure (Inch of Mercury)
-	 * @throws DecoderException
-	 */
-	public void testPressureInchOfMercury() throws DecoderException {
-		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
+	public static Remarks decodeObject(StringBuffer metarAsString) {
+		Remarks remarks = null;
 		
-		assertEquals(1018, metar.getPressure().getPressure().intValue());
-		
+		if (metarAsString.toString().matches(REMARKS_PATTERN)) {
+			remarks = new Remarks();
+			
+			metarAsString.delete(0, 4);
+			
+			remarks.setRemarks(metarAsString.toString());
+			
+			metarAsString.delete(0, metarAsString.length());
+			
+		}
+		return remarks;
+
 	}
-
+	
 }
