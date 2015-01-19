@@ -20,28 +20,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.exception;
+package ca.braunit.weatherparser.metar.util;
 
-public class DecoderException extends Exception {
+import java.util.ArrayList;
+import java.util.List;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4336068378129365583L;
+import ca.braunit.weatherparser.metar.domain.WindShear;
 
-	public DecoderException() {
-		super();
-	}
+public class WindShearDecoder {
 
-	public DecoderException(String message) {
-		super(message);
-	}
-	
-	public DecoderException(Throwable cause) {
-		super(cause);
-	}
-	
-	public DecoderException(String message, Throwable cause) {
-		super(message, cause);
+	private static final String WIND_SHEAR_PATTERN = "WS ((RWY([\\d]{2}(L|R|C)?))|ALL RWY).*";
+
+	public static List<WindShear> decodeObject(StringBuffer metarAsString) {
+		List<WindShear> windShearList = new ArrayList<WindShear>();
+		
+		while (metarAsString.toString().matches(WIND_SHEAR_PATTERN)) {
+			WindShear windShear = new WindShear();
+			
+			metarAsString.delete(0, 3);
+			
+			if (metarAsString.toString().startsWith("ALL RWY")) {
+				windShear.setAllRunways(true);
+				metarAsString.delete(0, 7);
+			} else {
+				metarAsString.delete(0, 3);				
+				windShear.setRunwayIdentifier(metarAsString.substring(0,metarAsString.indexOf(" ")));
+				metarAsString.delete(0,metarAsString.indexOf(" ")+1);
+			}
+			windShearList.add(windShear);
+		}
+		return windShearList;
+		
 	}
 }

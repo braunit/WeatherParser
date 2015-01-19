@@ -1,5 +1,6 @@
 /*
  * Copyright (c)2014 Braun IT Solutions Ltd, Vancouver, Canada
+ * http://www.braun-it.ca
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +38,7 @@ public class Metar {
 	private List<RunwayVisualRange> runwayVisualRanges;
 	private List<Weather> presentWeather;
 	private List<Weather> recentWeather;
-	private List<Clouds> cloudsList;
+	private List<Clouds> clouds;
 	private TemperatureAndDewPoint temperatureAndDewPoint;
 	private Pressure pressure;
 	private List<WindShear> windShear;
@@ -131,12 +132,12 @@ public class Metar {
 		this.recentWeather = recentWeather;
 	}
 
-	public List<Clouds> getCloudsList() {
-		return cloudsList;
+	public List<Clouds> getClouds() {
+		return clouds;
 	}
 
-	public void setCloudsList(List<Clouds> cloudsList) {
-		this.cloudsList = cloudsList;
+	public void setClouds(List<Clouds> clouds) {
+		this.clouds = clouds;
 	}
 
 	public TemperatureAndDewPoint getTemperatureAndDewPoint() {

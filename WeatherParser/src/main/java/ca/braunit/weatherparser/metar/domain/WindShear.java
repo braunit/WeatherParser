@@ -20,28 +20,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.exception;
+package ca.braunit.weatherparser.metar.domain;
 
-public class DecoderException extends Exception {
+public class WindShear {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4336068378129365583L;
+	private String runwayIdentifier;
+	private boolean allRunways = false;
 
-	public DecoderException() {
-		super();
+	public String getRunwayIdentifier() {
+		return runwayIdentifier;
+	}
+	public void setRunwayIdentifier(String runwayIdentifier) {
+		this.runwayIdentifier = runwayIdentifier;
+	}
+	public boolean isAllRunways() {
+		return allRunways;
+	}
+	public void setAllRunways(boolean allRunways) {
+		this.allRunways = allRunways;
 	}
 
-	public DecoderException(String message) {
-		super(message);
-	}
 	
-	public DecoderException(Throwable cause) {
-		super(cause);
-	}
-	
-	public DecoderException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }

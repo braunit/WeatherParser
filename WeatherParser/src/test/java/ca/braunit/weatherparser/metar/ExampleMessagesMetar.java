@@ -25,7 +25,12 @@ public final class ExampleMessagesMetar {
 
 	/**
 	 * Visibility in Statute Miles <br>
-	 * Runway Visual Range in feet
+	 * Runway Visual Range in feet <br>
+	 * Clouds Scattered 900 feet and Broken 2100 feet Overcast 5000 feet <br>
+	 * Temperature 10 Degrees Celsius, Dew Point 9 Degrees Celsius <br>
+	 * Altimeter Setting (Pressure) inch of Mercury <br>
+	 * Recent Weather Shower and Rain <br>
+	 * Wind Shear Runway 11L
 	 */
 	public static final String METAR_EXAMPLE_1 = "CYVR 030100Z 08006KT 6SM R01L/0800FT -RA SCT009 BKN021 OVC050 10/09 A3007 RESHRA WS RWY11L WS RWY11R RMK SF3SC3SC2 SLP181";
 

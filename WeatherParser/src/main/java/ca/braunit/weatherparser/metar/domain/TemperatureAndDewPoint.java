@@ -20,28 +20,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.exception;
+package ca.braunit.weatherparser.metar.domain;
 
-public class DecoderException extends Exception {
+public class TemperatureAndDewPoint {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4336068378129365583L;
+	private Integer temperature;
+	private Integer dewPoint;
 
-	public DecoderException() {
-		super();
+	public Integer getTemperature() {
+		return temperature;
+	}
+	public void setTemperature(Integer temperature) {
+		this.temperature = temperature;
+	}
+	public Integer getDewPoint() {
+		return dewPoint;
+	}
+	public void setDewPoint(Integer dewPoint) {
+		this.dewPoint = dewPoint;
 	}
 
-	public DecoderException(String message) {
-		super(message);
-	}
 	
-	public DecoderException(Throwable cause) {
-		super(cause);
-	}
-	
-	public DecoderException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }

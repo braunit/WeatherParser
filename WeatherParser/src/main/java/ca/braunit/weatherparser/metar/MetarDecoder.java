@@ -1,5 +1,6 @@
 /*
  * Copyright (c)2014 Braun IT Solutions Ltd, Vancouver, Canada
+ * http://www.braun-it.ca
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,10 +24,15 @@ package ca.braunit.weatherparser.metar;
 
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.metar.domain.Metar;
+import ca.braunit.weatherparser.metar.util.CloudsDecoder;
+import ca.braunit.weatherparser.metar.util.PressureDecoder;
 import ca.braunit.weatherparser.metar.util.ReportTimeDecoder;
 import ca.braunit.weatherparser.metar.util.RunwayVisualRangeDecoder;
+import ca.braunit.weatherparser.metar.util.TemperatureAndDewPointDecoder;
 import ca.braunit.weatherparser.metar.util.VisibilityDecoder;
+import ca.braunit.weatherparser.metar.util.WeatherDecoder;
 import ca.braunit.weatherparser.metar.util.WindDecoder;
+import ca.braunit.weatherparser.metar.util.WindShearDecoder;
 
 public class MetarDecoder {
 
@@ -37,10 +43,6 @@ public class MetarDecoder {
 
 	private static final String ICAO_CODE_PATTERN = "[A-Za-z]{4}";
 
-	public static void main(String[] args) throws DecoderException {
-		Metar m = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
-	}
-	
 	public static Metar decodeMetar(String metarAsString) throws DecoderException {
 		return decodeObject(new StringBuffer(metarAsString.trim()));
 	}
@@ -57,6 +59,18 @@ public class MetarDecoder {
 		metar.setWind(WindDecoder.decodeObject(metarAsString));
 		metar.setVisibility(VisibilityDecoder.decodeObject(metarAsString));
 		metar.setRunwayVisualRanges(RunwayVisualRangeDecoder.decodeObject(metarAsString));
+		
+		metar.setPresentWeather(WeatherDecoder.decodeObject(metarAsString, true));
+		
+		metar.setClouds(CloudsDecoder.decodeObject(metarAsString));
+		
+		metar.setTemperatureAndDewPoint(TemperatureAndDewPointDecoder.decodeObject(metarAsString));
+		
+		metar.setPressure(PressureDecoder.decodeObject(metarAsString));
+		
+		metar.setRecentWeather(WeatherDecoder.decodeObject(metarAsString, false));
+		
+		metar.setWindShear(WindShearDecoder.decodeObject(metarAsString));
 		
 		return metar;
 	}

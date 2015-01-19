@@ -20,28 +20,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.exception;
+package ca.braunit.weatherparser.metar.util;
 
-public class DecoderException extends Exception {
+import ca.braunit.weatherparser.exception.DecoderException;
+import ca.braunit.weatherparser.metar.domain.ReportTime;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4336068378129365583L;
+public class ReportTimeDecoder {
 
-	public DecoderException() {
-		super();
+	private static final String REPORT_TIME_PATTERN = "(\\d){6}(z|Z)";
+
+	public static ReportTime decodeObject(StringBuffer metarAsString) throws DecoderException {
+		ReportTime repTime = new ReportTime();
+		if (metarAsString.substring(0,metarAsString.indexOf(" ")).matches(REPORT_TIME_PATTERN)) {
+			repTime.setDayOfMonth(Integer.parseInt(metarAsString.substring(0,2)));
+			repTime.setHour(Integer.parseInt(metarAsString.substring(2,4)));
+			repTime.setMinute(Integer.parseInt(metarAsString.substring(4,6)));
+		} else {
+			throw new DecoderException("No ReportTime available");
+		}
+		
+		metarAsString.delete(0, metarAsString.indexOf(" ")+1);
+		
+		return repTime;
 	}
 
-	public DecoderException(String message) {
-		super(message);
-	}
-	
-	public DecoderException(Throwable cause) {
-		super(cause);
-	}
-	
-	public DecoderException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }

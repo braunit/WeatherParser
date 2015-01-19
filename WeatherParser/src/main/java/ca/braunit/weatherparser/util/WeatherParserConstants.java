@@ -20,28 +20,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.exception;
+package ca.braunit.weatherparser.util;
 
-public class DecoderException extends Exception {
+public final class WeatherParserConstants {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4336068378129365583L;
-
-	public DecoderException() {
-		super();
-	}
-
-	public DecoderException(String message) {
-		super(message);
-	}
+	public static final String UNIT_OF_MEASURE_METER = "M";
+	public static final String UNIT_OF_MEASURE_FEET = "FT";
+	public static final String UNIT_OF_MEASURE_NAUTICAL_MILES = "SM";
+	public static final String UNIT_OF_MEASURE_STATUTE_MILES = "SM";
 	
-	public DecoderException(Throwable cause) {
-		super(cause);
-	}
+	public static final String UNIT_OF_MEASURE_KNOTS = "KT";
+
 	
-	public DecoderException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }

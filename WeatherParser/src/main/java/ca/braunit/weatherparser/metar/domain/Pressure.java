@@ -20,28 +20,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.exception;
+package ca.braunit.weatherparser.metar.domain;
 
-public class DecoderException extends Exception {
+public class Pressure {
+
+	private Integer pressure;
 
 	/**
-	 * 
+	 * Returns the pressure measured in hectopascal (hpa)
+	 * @return the pressure measured in hectopascal (hpa)
 	 */
-	private static final long serialVersionUID = -4336068378129365583L;
-
-	public DecoderException() {
-		super();
+	public Integer getPressure() {
+		return pressure;
 	}
 
-	public DecoderException(String message) {
-		super(message);
+	/**
+	 * Sets the pressure measured in hectopascal (hpa)
+	 * @param pressure the pressure measured in hectopascal (hpa)
+	 */
+	public void setPressure(Integer pressure) {
+		this.pressure = pressure;
 	}
+
 	
-	public DecoderException(Throwable cause) {
-		super(cause);
-	}
-	
-	public DecoderException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }

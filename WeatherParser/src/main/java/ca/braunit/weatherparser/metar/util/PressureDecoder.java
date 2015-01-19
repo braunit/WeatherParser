@@ -20,28 +20,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.exception;
+package ca.braunit.weatherparser.metar.util;
 
-public class DecoderException extends Exception {
+import ca.braunit.weatherparser.metar.domain.Pressure;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4336068378129365583L;
+public class PressureDecoder {
 
-	public DecoderException() {
-		super();
-	}
+	private static final String PRESSURE_PATTERN = "(Q|A)(\\d){4}(.)*";
+	
+	public static Pressure decodeObject(StringBuffer metarAsString) {
 
-	public DecoderException(String message) {
-		super(message);
+		Pressure pressure = null;		
+		if (metarAsString.toString().matches(PRESSURE_PATTERN)) {
+			pressure = new Pressure();
+			if (metarAsString.toString().startsWith("Q")) {
+				pressure.setPressure(Integer.parseInt(metarAsString.substring(1, 5)));
+			} else {
+				pressure.setPressure((int)Math.round(Double.parseDouble(metarAsString.substring(1, 5))/100/0.02953));				
+			}
+			CommonDecoder.deleteParsedContent(metarAsString);
+		}
+		return pressure;
+
 	}
 	
-	public DecoderException(Throwable cause) {
-		super(cause);
-	}
-	
-	public DecoderException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }

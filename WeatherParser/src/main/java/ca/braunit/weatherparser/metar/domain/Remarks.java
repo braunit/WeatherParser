@@ -20,28 +20,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.exception;
+package ca.braunit.weatherparser.metar.domain;
 
-public class DecoderException extends Exception {
+public class Remarks {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4336068378129365583L;
-
-	public DecoderException() {
-		super();
-	}
-
-	public DecoderException(String message) {
-		super(message);
-	}
-	
-	public DecoderException(Throwable cause) {
-		super(cause);
-	}
-	
-	public DecoderException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }

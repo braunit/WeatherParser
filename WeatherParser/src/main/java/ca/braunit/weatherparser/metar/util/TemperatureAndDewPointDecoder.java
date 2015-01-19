@@ -20,28 +20,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.exception;
+package ca.braunit.weatherparser.metar.util;
 
-public class DecoderException extends Exception {
+import ca.braunit.weatherparser.metar.domain.TemperatureAndDewPoint;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4336068378129365583L;
+public class TemperatureAndDewPointDecoder {
 
-	public DecoderException() {
-		super();
-	}
+	private static final String TEMPERATURE_AND_DEW_POINT_PATTERN = "(M)?(\\d){2}/(M)?(\\d){2}";
 
-	public DecoderException(String message) {
-		super(message);
-	}
-	
-	public DecoderException(Throwable cause) {
-		super(cause);
-	}
-	
-	public DecoderException(String message, Throwable cause) {
-		super(message, cause);
+	public static TemperatureAndDewPoint decodeObject(StringBuffer metarAsString) {
+
+		TemperatureAndDewPoint tad = null;
+		
+		if (metarAsString.substring(0, metarAsString.indexOf(" ")).toString().matches(TEMPERATURE_AND_DEW_POINT_PATTERN)) {
+			tad = new TemperatureAndDewPoint();
+			int multiplier = 1;
+			if (metarAsString.toString().startsWith("M")) {
+				metarAsString.delete(0, 1);
+				multiplier = -1;
+			}
+			tad.setTemperature(Integer.parseInt(metarAsString.substring(0, 2)) * multiplier);
+			metarAsString.delete(0, 3);
+			if (metarAsString.toString().startsWith("M")) {
+				metarAsString.delete(0, 1);
+				multiplier = -1;
+			} else {
+				multiplier = 1;
+			}
+			tad.setDewPoint(Integer.parseInt(metarAsString.substring(0, 2)) * multiplier);
+			
+			metarAsString.delete(0, metarAsString.indexOf(" ") + 1);
+			
+		}
+		return tad;
+
 	}
 }

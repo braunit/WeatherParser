@@ -20,28 +20,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.exception;
+package ca.braunit.weatherparser.metar.util;
 
-public class DecoderException extends Exception {
+import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+
+import ca.braunit.weatherparser.exception.DecoderException;
+import ca.braunit.weatherparser.metar.ExampleMessagesMetar;
+import ca.braunit.weatherparser.metar.MetarDecoder;
+import ca.braunit.weatherparser.metar.domain.Metar;
+
+public class PressureDecoderTest {
+
+	@Test
 	/**
-	 * 
+	 * Check Temperature and Dew Point Decoding (10/9 Degrees Celsius)
+	 * @throws DecoderException
 	 */
-	private static final long serialVersionUID = -4336068378129365583L;
-
-	public DecoderException() {
-		super();
+	public void testPressureInchOfMercury() throws DecoderException {
+		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
+		
+		assertEquals(1018, metar.getPressure().getPressure().intValue());
+		
 	}
 
-	public DecoderException(String message) {
-		super(message);
-	}
-	
-	public DecoderException(Throwable cause) {
-		super(cause);
-	}
-	
-	public DecoderException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }

@@ -20,28 +20,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.exception;
+package ca.braunit.weatherparser.metar.util;
 
-public class DecoderException extends Exception {
+import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+
+import ca.braunit.weatherparser.exception.DecoderException;
+import ca.braunit.weatherparser.metar.ExampleMessagesMetar;
+import ca.braunit.weatherparser.metar.MetarDecoder;
+import ca.braunit.weatherparser.metar.domain.Metar;
+
+public class CloudsDecoderTest {
+
+	@Test
 	/**
-	 * 
+	 * Check Clouds Decoding (Light Rain)
+	 * @throws DecoderException
 	 */
-	private static final long serialVersionUID = -4336068378129365583L;
-
-	public DecoderException() {
-		super();
+	public void testClouds() throws DecoderException {
+		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
+		
+		assertEquals("Scattered", metar.getClouds().get(0).getCloudAmount());
+		assertEquals(900, metar.getClouds().get(0).getCloudHeight().intValue());
+		
+		assertEquals("Broken", metar.getClouds().get(1).getCloudAmount());
+		assertEquals(2100, metar.getClouds().get(1).getCloudHeight().intValue());
+		
+		assertEquals("Overcast", metar.getClouds().get(2).getCloudAmount());
+		assertEquals(5000, metar.getClouds().get(2).getCloudHeight().intValue());
+		
 	}
 
-	public DecoderException(String message) {
-		super(message);
-	}
-	
-	public DecoderException(Throwable cause) {
-		super(cause);
-	}
-	
-	public DecoderException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }

@@ -20,28 +20,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.exception;
+package ca.braunit.weatherparser.metar.util;
 
-public class DecoderException extends Exception {
+import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+
+import ca.braunit.weatherparser.exception.DecoderException;
+import ca.braunit.weatherparser.metar.ExampleMessagesMetar;
+import ca.braunit.weatherparser.metar.MetarDecoder;
+import ca.braunit.weatherparser.metar.domain.Metar;
+
+public class WindShearDecoderTest {
+
+	@Test
 	/**
-	 * 
+	 * Check Wind Shear Decoding Decoding (Runway 11L)
+	 * @throws DecoderException
 	 */
-	private static final long serialVersionUID = -4336068378129365583L;
-
-	public DecoderException() {
-		super();
+	public void testWindShear() throws DecoderException {
+		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
+		
+		assertEquals("11L", metar.getWindShear().get(0).getRunwayIdentifier());
+		
 	}
 
-	public DecoderException(String message) {
-		super(message);
-	}
-	
-	public DecoderException(Throwable cause) {
-		super(cause);
-	}
-	
-	public DecoderException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }
