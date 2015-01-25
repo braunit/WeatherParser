@@ -20,12 +20,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.common.util;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-import ca.braunit.weatherparser.metar.domain.Visibility;
+import ca.braunit.weatherparser.common.domain.Visibility;
+import ca.braunit.weatherparser.metar.util.CommonDecoder;
 
 public class VisibilityDecoder {
 
@@ -33,8 +34,8 @@ public class VisibilityDecoder {
 	private static final String CAVOK_PATTERN = "(CAVOK)(.)*";
 	private static final String STANDARD_VISIBILITY_PATTERN = "[\\d]{4}(\\s|NDV)(.)*";
 	private static final String STANDARD_WITH_DIRECTION_VISIBILITY_PATTERN = "[\\d]{4}(N|NW|W|SW|S|SE|E|NE)(.)*";
-	private static final String STATUTE_MILE_VISIBILITY_PATTERN = "[\\d]{1,4}SM(.)*";
-	private static final String STATUTE_MILE_FRACTION_VISIBILITY_PATTERN = "[\\d]/[\\d]SM(.)*";
+	private static final String STATUTE_MILE_VISIBILITY_PATTERN = "(P)?[\\d]{1,4}SM(.)*";
+	private static final String STATUTE_MILE_FRACTION_VISIBILITY_PATTERN = "([\\d] )?[\\d]/[\\d]SM(.)*";
 
 	//Examples
 	//8000 = 8000m
@@ -50,6 +51,10 @@ public class VisibilityDecoder {
 			visibility.setCavok(true);
 			metarAsString.delete(0, "CAVOK".length()+1);
 		} else if (metarAsString.toString().matches(STATUTE_MILE_VISIBILITY_PATTERN)) {
+			if (metarAsString.toString().startsWith("P")) {
+				visibility.setGreaterThan(true);
+				metarAsString.delete(0, 1);
+			}
 			String visibilityString = metarAsString.substring(0, metarAsString.indexOf("SM"));
 			visibility.setVisibility(new BigDecimal(visibilityString));
 			metarAsString.delete(0, visibilityString.length()+3);
@@ -68,12 +73,18 @@ public class VisibilityDecoder {
 			metarAsString.delete(0, 4);
 			visibility.setDirection(metarAsString.substring(0, metarAsString.indexOf(" ")));
 			metarAsString.delete(0, visibility.getDirection().length()+1);
-		} else if (metarAsString.toString().matches(STATUTE_MILE_FRACTION_VISIBILITY_PATTERN)) {
-			String visibilityString = metarAsString.substring(0, metarAsString.indexOf("SM"));
-			BigDecimal number = new BigDecimal(metarAsString.substring(0, metarAsString.indexOf("/")));
+		} else if (metarAsString.toString().matches(STATUTE_MILE_FRACTION_VISIBILITY_PATTERN)) {		
+			//Check if 
+			BigDecimal additionalStatuteMiles = BigDecimal.ZERO;
+			if (" ".equals(metarAsString.substring(1, 2))) {
+				additionalStatuteMiles = new BigDecimal(metarAsString.substring(0, metarAsString.indexOf(" ")));
+				CommonDecoder.deleteParsedContent(metarAsString);
+			}
+			
+			BigDecimal numerator = new BigDecimal(metarAsString.substring(0, metarAsString.indexOf("/")));
 			BigDecimal divisor = new BigDecimal(metarAsString.substring(metarAsString.indexOf("/")+1,metarAsString.indexOf("SM")));
-			visibility.setVisibility(number.divide(divisor, MathContext.DECIMAL32));
-			metarAsString.delete(0, visibilityString.length()+3);
+			visibility.setVisibility(numerator.divide(divisor, MathContext.DECIMAL32).add(additionalStatuteMiles));
+			CommonDecoder.deleteParsedContent(metarAsString);
 			visibility.setVisibilityUnitOfMeasure("SM");
 		}
 		

@@ -20,27 +20,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.taf.util;
 
-public class CommonDecoder {
+import ca.braunit.weatherparser.metar.domain.Pressure;
+import ca.braunit.weatherparser.metar.util.CommonDecoder;
 
-	public static void deleteParsedContent(StringBuffer sb) {
-		if (sb.toString().contains(" ")) {
-			sb.delete(0, sb.indexOf(" ") + 1);
-		} else {
-			sb.delete(0, sb.length());
+public class MinimumAltimeterSettingDecoder {
+	
+	private static final String PRESSURE_PATTERN = "QNH(\\d){4}INS( |\\Z)(.)*";
+	
+	public static Pressure decodeObject(StringBuffer tafAsString) {
+
+		Pressure pressure = null;		
+		if (tafAsString.toString().matches(PRESSURE_PATTERN)) {
+			pressure = new Pressure();
+			pressure.setPressure((int)Math.round(Double.parseDouble(tafAsString.substring(3, 7))/100/0.02953));				
+			CommonDecoder.deleteParsedContent(tafAsString);
 		}
-	}
+		return pressure;
 
-	public static String getContentToParse(StringBuffer sb) {
-		
-		if (sb.length() == 0) {
-			return null;
-		} else if (sb.indexOf(" ") > -1) {
-			return sb.substring(0, sb.indexOf(" "));
-		} else {
-			return sb.toString();
-		}
 	}
 	
+
+
 }

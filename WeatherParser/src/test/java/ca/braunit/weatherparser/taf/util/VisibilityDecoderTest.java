@@ -20,27 +20,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.taf.util;
 
-public class CommonDecoder {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-	public static void deleteParsedContent(StringBuffer sb) {
-		if (sb.toString().contains(" ")) {
-			sb.delete(0, sb.indexOf(" ") + 1);
-		} else {
-			sb.delete(0, sb.length());
-		}
+import java.math.BigDecimal;
+
+import org.junit.Test;
+
+import ca.braunit.weatherparser.exception.DecoderException;
+import ca.braunit.weatherparser.taf.ExampleMessagesTaf;
+import ca.braunit.weatherparser.taf.TafDecoder;
+import ca.braunit.weatherparser.taf.domain.Taf;
+
+public class VisibilityDecoderTest {
+
+	@Test
+	/**
+	 * Check Visibility Decoding
+	 * 
+	 * @throws DecoderException
+	 */
+	public void testVisibility() throws DecoderException {
+		Taf taf = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
+		assertEquals(new BigDecimal("6"), taf.getVisibility().getVisibility());
+		assertEquals("SM", taf.getVisibility().getVisibilityUnitOfMeasure());
+		assertTrue(taf.getVisibility().isGreaterThan());
 	}
 
-	public static String getContentToParse(StringBuffer sb) {
-		
-		if (sb.length() == 0) {
-			return null;
-		} else if (sb.indexOf(" ") > -1) {
-			return sb.substring(0, sb.indexOf(" "));
-		} else {
-			return sb.toString();
-		}
-	}
-	
 }

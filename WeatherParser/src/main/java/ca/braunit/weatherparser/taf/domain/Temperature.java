@@ -20,27 +20,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.taf.domain;
 
-public class CommonDecoder {
+import ca.braunit.weatherparser.common.domain.TimeInfo;
 
-	public static void deleteParsedContent(StringBuffer sb) {
-		if (sb.toString().contains(" ")) {
-			sb.delete(0, sb.indexOf(" ") + 1);
-		} else {
-			sb.delete(0, sb.length());
-		}
+public class Temperature {
+
+	private Integer temperature;
+	private TimeInfo time;
+
+	public Integer getTemperature() {
+		return temperature;
 	}
-
-	public static String getContentToParse(StringBuffer sb) {
-		
-		if (sb.length() == 0) {
-			return null;
-		} else if (sb.indexOf(" ") > -1) {
-			return sb.substring(0, sb.indexOf(" "));
-		} else {
-			return sb.toString();
-		}
+	public void setTemperature(Integer temperature) {
+		this.temperature = temperature;
+	}
+	public TimeInfo getTime() {
+		return time;
+	}
+	public void setTime(TimeInfo time) {
+		this.time = time;
 	}
 	
 }

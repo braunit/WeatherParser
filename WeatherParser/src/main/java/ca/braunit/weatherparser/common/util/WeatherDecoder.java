@@ -20,19 +20,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.common.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.braunit.weatherparser.metar.domain.Weather;
+import ca.braunit.weatherparser.common.domain.Weather;
 
 public class WeatherDecoder {
 
-	private static final String PRESENT_WEATHER_PATTERN = "(\\+|\\-|VC)?(([a-zA-Z]){2})+(\\s)(.)*";
-	private static final String RECENT_WEATHER_PATTERN = "RE(\\+|\\-|VC)?(([a-zA-Z]){2})+(.)*";
+	private static final String WEATHER_PATTERN = "(RE)?(\\+|\\-|VC)?(([a-zA-Z]){2})+( |\\Z)(.)*";
 	
 	private static final String INTENSITY_PATTERN = "^(\\+|\\-|VC).*";
 	
@@ -93,31 +92,28 @@ public class WeatherDecoder {
 	}
 
 	
-	public static List<Weather> decodeObject(StringBuffer metarAsString, boolean presentWeather) {
-		if (presentWeather) {
-			return decodeWeather(metarAsString, PRESENT_WEATHER_PATTERN);
-		}
-		return decodeWeather(metarAsString, RECENT_WEATHER_PATTERN);
-	}
-	
-	private static List<Weather> decodeWeather(StringBuffer metarAsString, String weatherPattern) {
+	public static List<Weather> decodeObject(StringBuffer metarAsString) {
 		List<Weather> weatherList = new ArrayList<Weather>();
 		
-		while (metarAsString.toString().matches(weatherPattern)) {
+		while (metarAsString.toString().matches(WEATHER_PATTERN)) {
+			
+			boolean foundRequiredWeatherInfo = false;
 
 			Weather weather = new Weather();
+			
+			StringBuffer weatherInfo = new StringBuffer(metarAsString.substring(0,metarAsString.indexOf(" ")));
 
-			if (metarAsString.toString().startsWith("RE")) {
-				metarAsString.delete(0, 2);
+			if (weatherInfo.toString().startsWith("RE")) {
+				weatherInfo.delete(0, 2);
 			}
 			
-			if (metarAsString.toString().matches(INTENSITY_PATTERN)) {
-				if (metarAsString.toString().startsWith("+") || metarAsString.toString().startsWith("-")) {
-					weather.setIntensityCode(metarAsString.substring(0, 1));
-					metarAsString.delete(0, 1);
+			if (weatherInfo.toString().matches(INTENSITY_PATTERN)) {
+				if (weatherInfo.toString().startsWith("+") || weatherInfo.toString().startsWith("-")) {
+					weather.setIntensityCode(weatherInfo.substring(0, 1));
+					weatherInfo.delete(0, 1);
 				} else {
-					weather.setIntensityCode(metarAsString.substring(0,2));
-					metarAsString.delete(0, 2);
+					weather.setIntensityCode(weatherInfo.substring(0,2));
+					weatherInfo.delete(0, 2);
 				}
 				weather.setIntensity(INTENSITY_MAP.get(weather.getIntensityCode()));
 			} else {
@@ -125,37 +121,41 @@ public class WeatherDecoder {
 				weather.setIntensity(INTENSITY_MAP.get("DEFAULT"));
 			}
 			
-			StringBuffer weatherInfo = new StringBuffer(metarAsString.substring(0,metarAsString.indexOf(" ")));
-			
 			while (weatherInfo.length() >= 2) {
 				String checkString = weatherInfo.substring(0,2);
 				if (null != DESCRIPTOR_MAP.get(checkString)) {
 					weather.setDescriptor(DESCRIPTOR_MAP.get(checkString));
 					weather.setDescriptorCode(checkString);
+					foundRequiredWeatherInfo = true;
 				} else if (null != PRECIPITATION_MAP.get(checkString)) {
 					weather.setPrecipitation(PRECIPITATION_MAP.get(checkString));
 					weather.setPrecipitationCode(checkString);
+					foundRequiredWeatherInfo = true;
 				} else if (null != OBSCURATION_MAP.get(checkString)) {
 					weather.setObscuration(OBSCURATION_MAP.get(checkString));
 					weather.setObscurationCode(checkString);
+					foundRequiredWeatherInfo = true;
 				} else if (null != OTHER_MAP.get(checkString)) {
 					if (null != OTHER_MAP.get(weather.getIntensity() + checkString)) {
 						weather.setOther(OTHER_MAP.get(weather.getIntensity() + checkString));
 					} else {
 						weather.setOther(OTHER_MAP.get(checkString));
 					}
+					foundRequiredWeatherInfo = true;
 					weather.setOtherCode(checkString);
 				}
 				weatherInfo.delete(0, 2);
 			}
 			
-			metarAsString.delete(0, metarAsString.indexOf(" ") + 1);
-			
-			weatherList.add(weather);
-			
+			if (foundRequiredWeatherInfo) {
+				metarAsString.delete(0, metarAsString.indexOf(" ") + 1);		
+				weatherList.add(weather);
+			} else {
+				break;
+			}
 		}
 		
 		return weatherList;
-
 	}
+	
 }

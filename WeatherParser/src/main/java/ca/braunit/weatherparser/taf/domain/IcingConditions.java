@@ -20,27 +20,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.taf.domain;
 
-public class CommonDecoder {
+public class IcingConditions {
 
-	public static void deleteParsedContent(StringBuffer sb) {
-		if (sb.toString().contains(" ")) {
-			sb.delete(0, sb.indexOf(" ") + 1);
-		} else {
-			sb.delete(0, sb.length());
-		}
+	private Integer icingLayerBase;
+	private Integer icingLayerDepth;
+	
+	private Integer icingIntensityCode;
+	private String icingIntensity;
+
+	public Integer getIcingLayerBase() {
+		return icingLayerBase;
 	}
-
-	public static String getContentToParse(StringBuffer sb) {
-		
-		if (sb.length() == 0) {
-			return null;
-		} else if (sb.indexOf(" ") > -1) {
-			return sb.substring(0, sb.indexOf(" "));
-		} else {
-			return sb.toString();
-		}
+	public void setIcingLayerBase(Integer icingLayerBase) {
+		this.icingLayerBase = icingLayerBase;
+	}
+	public Integer getIcingLayerDepth() {
+		return icingLayerDepth;
+	}
+	public void setIcingLayerDepth(Integer icingLayerDepth) {
+		this.icingLayerDepth = icingLayerDepth;
+	}
+	public Integer getIcingIntensityCode() {
+		return icingIntensityCode;
+	}
+	public void setIcingIntensityCode(Integer icingIntensityCode) {
+		this.icingIntensityCode = icingIntensityCode;
+	}
+	public String getIcingIntensity() {
+		return icingIntensity;
+	}
+	public void setIcingIntensity(String icingIntensity) {
+		this.icingIntensity = icingIntensity;
 	}
 	
 }

@@ -24,6 +24,12 @@ package ca.braunit.weatherparser.metar.domain;
 
 import java.util.List;
 
+import ca.braunit.weatherparser.common.domain.Clouds;
+import ca.braunit.weatherparser.common.domain.TimeInfo;
+import ca.braunit.weatherparser.common.domain.Visibility;
+import ca.braunit.weatherparser.common.domain.Weather;
+import ca.braunit.weatherparser.common.domain.Wind;
+
 public class Metar {
 	
 	private String airportIcaoCode;
@@ -32,7 +38,7 @@ public class Metar {
 	private boolean correctedReport = false;
 	private boolean automatedObservation = false;
 
-	private ReportTime reportTime;
+	private TimeInfo reportTime;
 	private Wind wind;
 	private Visibility visibility;
 	private List<RunwayVisualRange> runwayVisualRanges;
@@ -84,11 +90,11 @@ public class Metar {
 		this.automatedObservation = automatedObservation;
 	}
 
-	public ReportTime getReportTime() {
+	public TimeInfo getReportTime() {
 		return reportTime;
 	}
 
-	public void setReportTime(ReportTime reportTime) {
+	public void setReportTime(TimeInfo reportTime) {
 		this.reportTime = reportTime;
 	}
 

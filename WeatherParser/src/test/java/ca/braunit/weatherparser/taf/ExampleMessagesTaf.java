@@ -20,27 +20,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.taf;
 
-public class CommonDecoder {
+public class ExampleMessagesTaf {
 
-	public static void deleteParsedContent(StringBuffer sb) {
-		if (sb.toString().contains(" ")) {
-			sb.delete(0, sb.indexOf(" ") + 1);
-		} else {
-			sb.delete(0, sb.length());
-		}
-	}
-
-	public static String getContentToParse(StringBuffer sb) {
-		
-		if (sb.length() == 0) {
-			return null;
-		} else if (sb.indexOf(" ") > -1) {
-			return sb.substring(0, sb.indexOf(" "));
-		} else {
-			return sb.toString();
-		}
-	}
+	/**
+	 * Update over previous report
+	 */
+	public static final String TAF_EXAMPLE_1 = "TAF AMD KSEA 202100Z 2021/2124 35005KT P6SM FEW007 SCT250 WS010/18040KT FM202200 35006KT P6SM SCT250 WS020/18040KT FM210400 04006KT 1 1/2SM SKC 620304 520204 QNH2950INS T10/2104Z TM05/2106Z WSCONDS FM211000 05006KT 3SM BR SCT250 TEMPO 2111/2115 1/4SM FG VV001 FM211700 09004KT P6SM BKN250";
 	
 }

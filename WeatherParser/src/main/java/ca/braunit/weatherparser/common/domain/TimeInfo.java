@@ -20,27 +20,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.common.domain;
 
-public class CommonDecoder {
+public class TimeInfo {
 
-	public static void deleteParsedContent(StringBuffer sb) {
-		if (sb.toString().contains(" ")) {
-			sb.delete(0, sb.indexOf(" ") + 1);
-		} else {
-			sb.delete(0, sb.length());
-		}
+	private Integer dayOfMonth;
+	private Integer hour;
+	private Integer minute;
+
+	public Integer getDayOfMonth() {
+		return dayOfMonth;
+	}
+	public void setDayOfMonth(Integer dayOfMonth) {
+		this.dayOfMonth = dayOfMonth;
+	}
+	public Integer getHour() {
+		return hour;
+	}
+	public void setHour(Integer hour) {
+		this.hour = hour;
+	}
+	public Integer getMinute() {
+		return minute;
+	}
+	public void setMinute(Integer minute) {
+		this.minute = minute;
 	}
 
-	public static String getContentToParse(StringBuffer sb) {
-		
-		if (sb.length() == 0) {
-			return null;
-		} else if (sb.indexOf(" ") > -1) {
-			return sb.substring(0, sb.indexOf(" "));
-		} else {
-			return sb.toString();
-		}
-	}
-	
 }

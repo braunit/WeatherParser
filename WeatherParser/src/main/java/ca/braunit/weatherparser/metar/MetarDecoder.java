@@ -22,17 +22,17 @@
  */
 package ca.braunit.weatherparser.metar;
 
+import ca.braunit.weatherparser.common.util.CloudsDecoder;
+import ca.braunit.weatherparser.common.util.TimeInfoDecoder;
+import ca.braunit.weatherparser.common.util.VisibilityDecoder;
+import ca.braunit.weatherparser.common.util.WeatherDecoder;
+import ca.braunit.weatherparser.common.util.WindDecoder;
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.metar.domain.Metar;
-import ca.braunit.weatherparser.metar.util.CloudsDecoder;
 import ca.braunit.weatherparser.metar.util.PressureDecoder;
 import ca.braunit.weatherparser.metar.util.RemarksDecoder;
-import ca.braunit.weatherparser.metar.util.ReportTimeDecoder;
 import ca.braunit.weatherparser.metar.util.RunwayVisualRangeDecoder;
 import ca.braunit.weatherparser.metar.util.TemperatureAndDewPointDecoder;
-import ca.braunit.weatherparser.metar.util.VisibilityDecoder;
-import ca.braunit.weatherparser.metar.util.WeatherDecoder;
-import ca.braunit.weatherparser.metar.util.WindDecoder;
 import ca.braunit.weatherparser.metar.util.WindShearDecoder;
 
 public class MetarDecoder {
@@ -53,7 +53,7 @@ public class MetarDecoder {
 		deodeReportType(metar, metarAsString);
 		decodeAirportIcaoCode(metar, metarAsString);
 		
-		metar.setReportTime(ReportTimeDecoder.decodeObject(metarAsString));
+		metar.setReportTime(TimeInfoDecoder.decodeObject(metarAsString, true));
 		
 		decodeAutomatedObservation(metar, metarAsString);
 		
@@ -61,7 +61,7 @@ public class MetarDecoder {
 		metar.setVisibility(VisibilityDecoder.decodeObject(metarAsString));
 		metar.setRunwayVisualRanges(RunwayVisualRangeDecoder.decodeObject(metarAsString));
 		
-		metar.setPresentWeather(WeatherDecoder.decodeObject(metarAsString, true));
+		metar.setPresentWeather(WeatherDecoder.decodeObject(metarAsString));
 		
 		metar.setClouds(CloudsDecoder.decodeObject(metarAsString));
 		
@@ -69,7 +69,7 @@ public class MetarDecoder {
 		
 		metar.setPressure(PressureDecoder.decodeObject(metarAsString));
 		
-		metar.setRecentWeather(WeatherDecoder.decodeObject(metarAsString, false));
+		metar.setRecentWeather(WeatherDecoder.decodeObject(metarAsString));
 		
 		metar.setWindShear(WindShearDecoder.decodeObject(metarAsString));
 		

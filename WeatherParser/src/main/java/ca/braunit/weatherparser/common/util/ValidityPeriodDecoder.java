@@ -20,27 +20,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.common.util;
 
-public class CommonDecoder {
+import ca.braunit.weatherparser.common.domain.ValidityPeriod;
+import ca.braunit.weatherparser.exception.DecoderException;
+import ca.braunit.weatherparser.metar.util.CommonDecoder;
 
-	public static void deleteParsedContent(StringBuffer sb) {
-		if (sb.toString().contains(" ")) {
-			sb.delete(0, sb.indexOf(" ") + 1);
-		} else {
-			sb.delete(0, sb.length());
+public class ValidityPeriodDecoder {
+
+	private static final String VALIDITY_PERIOD_PATTERN = "(\\d){4}(/)(\\d){4}.*";
+
+	public static ValidityPeriod decodeObject(StringBuffer tafAsString) throws DecoderException {
+		ValidityPeriod validityPeriod = new ValidityPeriod();
+		if (tafAsString.toString().matches(VALIDITY_PERIOD_PATTERN)) {
+			validityPeriod.setFromDayOfMonth(Integer.parseInt(tafAsString.substring(0,2)));
+			validityPeriod.setFromHour(Integer.parseInt(tafAsString.substring(2,4)));
+			validityPeriod.setToDayOfMonth(Integer.parseInt(tafAsString.substring(5,7)));
+			validityPeriod.setToHour(Integer.parseInt(tafAsString.substring(7,9)));
+			CommonDecoder.deleteParsedContent(tafAsString);
 		}
-	}
-
-	public static String getContentToParse(StringBuffer sb) {
 		
-		if (sb.length() == 0) {
-			return null;
-		} else if (sb.indexOf(" ") > -1) {
-			return sb.substring(0, sb.indexOf(" "));
-		} else {
-			return sb.toString();
-		}
+		return validityPeriod;
 	}
-	
 }

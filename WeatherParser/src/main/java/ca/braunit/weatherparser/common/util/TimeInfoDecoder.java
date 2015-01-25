@@ -20,27 +20,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.common.util;
 
-public class CommonDecoder {
+import ca.braunit.weatherparser.common.domain.TimeInfo;
+import ca.braunit.weatherparser.exception.DecoderException;
+import ca.braunit.weatherparser.metar.util.CommonDecoder;
 
-	public static void deleteParsedContent(StringBuffer sb) {
-		if (sb.toString().contains(" ")) {
-			sb.delete(0, sb.indexOf(" ") + 1);
-		} else {
-			sb.delete(0, sb.length());
-		}
-	}
+public class TimeInfoDecoder {
 
-	public static String getContentToParse(StringBuffer sb) {
+	private static final String TIME_INFO_PATTERN = "(\\d){6}(z|Z)?";
+
+	public static TimeInfo decodeObject(StringBuffer tafAsString, boolean required) throws DecoderException {
+
+		TimeInfo timeInfo = new TimeInfo();
 		
-		if (sb.length() == 0) {
-			return null;
-		} else if (sb.indexOf(" ") > -1) {
-			return sb.substring(0, sb.indexOf(" "));
-		} else {
-			return sb.toString();
+		if (tafAsString.substring(0,tafAsString.indexOf(" ")).matches(TIME_INFO_PATTERN)) {
+			timeInfo.setDayOfMonth(Integer.parseInt(tafAsString.substring(0,2)));
+			timeInfo.setHour(Integer.parseInt(tafAsString.substring(2,4)));
+			timeInfo.setMinute(Integer.parseInt(tafAsString.substring(4,6)));
+		} else if (required) {
+			throw new DecoderException("No ReportTime available");
 		}
+		CommonDecoder.deleteParsedContent(tafAsString);
+		
+		return timeInfo;
 	}
-	
 }

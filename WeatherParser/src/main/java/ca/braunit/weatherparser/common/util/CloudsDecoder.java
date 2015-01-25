@@ -20,18 +20,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.common.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.braunit.weatherparser.metar.domain.Clouds;
+import ca.braunit.weatherparser.common.domain.Clouds;
+import ca.braunit.weatherparser.metar.util.CommonDecoder;
 
 public class CloudsDecoder {
 
-	private static final String CLOUDS_PATTERN = "(([a-zA-Z]){3}(\\d){3}(TCU|CB|ACC)?)|(([vV]){2}(\\d){3})|NCS|NCD";
+	private static final String CLOUDS_PATTERN = "(([a-zA-Z]){3}(\\d){3}(TCU|CB|ACC)?)|(([vV]){2}(\\d){3})|NCS|NCD|SKC";
 
 	private static final String CLOUD_AMOUNT_AND_HEIGHT_PATTERN = "(([a-zA-Z]){3}(\\d){3}(TCU|CB|ACC)?)";
 	private static final String VERTICAL_VISIBILITY_PATTERN = "(([vV]){2}(\\d){3})";
@@ -74,8 +75,10 @@ public class CloudsDecoder {
 				clouds.setNsc(true);
 			} else if (metarAsString.toString().startsWith("NCD")) {
 				clouds.setNcd(true);
+			} else if (metarAsString.toString().startsWith("SKC")) {
+				clouds.setSkyClear(true);
 			}
-			metarAsString.delete(0, metarAsString.indexOf(" ") + 1);
+			CommonDecoder.deleteParsedContent(metarAsString);
 			
 			cloudsList.add(clouds);
 			

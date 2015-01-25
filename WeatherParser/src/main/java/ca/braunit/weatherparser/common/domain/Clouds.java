@@ -20,7 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.domain;
+package ca.braunit.weatherparser.common.domain;
 
 public class Clouds {
 
@@ -33,6 +33,7 @@ public class Clouds {
 	private boolean tcu = false;
 	private boolean cb = false;
 	private boolean acc = false;
+	private boolean skyClear = false;
 
 	public String getCloudAmountCode() {
 		return cloudAmountCode;
@@ -87,6 +88,12 @@ public class Clouds {
 	}
 	public void setAcc(boolean acc) {
 		this.acc = acc;
+	}
+	public boolean isSkyClear() {
+		return skyClear;
+	}
+	public void setSkyClear(boolean skyClear) {
+		this.skyClear = skyClear;
 	}
 
 	

@@ -20,27 +20,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.taf.util;
 
-public class CommonDecoder {
+import ca.braunit.weatherparser.common.util.WindDecoder;
+import ca.braunit.weatherparser.exception.DecoderException;
+import ca.braunit.weatherparser.metar.util.CommonDecoder;
+import ca.braunit.weatherparser.taf.domain.WindShear;
 
-	public static void deleteParsedContent(StringBuffer sb) {
-		if (sb.toString().contains(" ")) {
-			sb.delete(0, sb.indexOf(" ") + 1);
-		} else {
-			sb.delete(0, sb.length());
-		}
-	}
-
-	public static String getContentToParse(StringBuffer sb) {
-		
-		if (sb.length() == 0) {
-			return null;
-		} else if (sb.indexOf(" ") > -1) {
-			return sb.substring(0, sb.indexOf(" "));
-		} else {
-			return sb.toString();
-		}
-	}
+public class WindShearDecoder {
 	
+	private static final String WIND_SHEAR_PATTERN = "((WS[\\d]{3}/[\\d]{5}(KMH|MPS|KT))|(WSCONDS))( |\\Z)(.)*";
+
+	public static WindShear decodeObject(StringBuffer tafAsString) throws DecoderException {
+		WindShear windShear = null;
+		
+		if (tafAsString.toString().matches(WIND_SHEAR_PATTERN)) {
+			windShear = new WindShear();
+			if (tafAsString.toString().startsWith("WSCONDS")) {
+				windShear.setPotentialWindShear(true);
+				CommonDecoder.deleteParsedContent(tafAsString);
+			} else {
+				tafAsString.delete(0, 2);
+				windShear.setAltitude(Integer.parseInt(tafAsString.substring(0, 3))*100);
+				tafAsString.delete(0, 4);
+				windShear.setWind(WindDecoder.decodeObject(tafAsString));
+			}
+		}
+		
+		return windShear;
+	}
 }

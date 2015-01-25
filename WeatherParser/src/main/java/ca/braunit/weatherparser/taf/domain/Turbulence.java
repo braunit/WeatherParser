@@ -20,27 +20,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.taf.domain;
 
-public class CommonDecoder {
+public class Turbulence {
 
-	public static void deleteParsedContent(StringBuffer sb) {
-		if (sb.toString().contains(" ")) {
-			sb.delete(0, sb.indexOf(" ") + 1);
-		} else {
-			sb.delete(0, sb.length());
-		}
+	private Integer turbulenceLayerBase;
+	private Integer turbulenceLayerDepth;
+	
+	private Integer turbulenceIntensityCode;
+	private String turbulenceIntensity;
+
+	public Integer getTurbulenceLayerBase() {
+		return turbulenceLayerBase;
+	}
+	public void setTurbulenceLayerBase(Integer turbulenceLayerBase) {
+		this.turbulenceLayerBase = turbulenceLayerBase;
+	}
+	public Integer getTurbulenceLayerDepth() {
+		return turbulenceLayerDepth;
+	}
+	public void setTurbulenceLayerDepth(Integer turbulenceLayerDepth) {
+		this.turbulenceLayerDepth = turbulenceLayerDepth;
+	}
+	public Integer getTurbulenceIntensityCode() {
+		return turbulenceIntensityCode;
+	}
+	public void setTurbulenceIntensityCode(Integer turbulenceIntensityCode) {
+		this.turbulenceIntensityCode = turbulenceIntensityCode;
+	}
+	public String getTurbulenceIntensity() {
+		return turbulenceIntensity;
+	}
+	public void setTurbulenceIntensity(String turbulenceIntensity) {
+		this.turbulenceIntensity = turbulenceIntensity;
 	}
 
-	public static String getContentToParse(StringBuffer sb) {
-		
-		if (sb.length() == 0) {
-			return null;
-		} else if (sb.indexOf(" ") > -1) {
-			return sb.substring(0, sb.indexOf(" "));
-		} else {
-			return sb.toString();
-		}
-	}
 	
 }

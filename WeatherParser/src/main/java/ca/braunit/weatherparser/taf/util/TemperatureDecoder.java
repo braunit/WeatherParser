@@ -20,27 +20,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.taf.util;
 
-public class CommonDecoder {
+import ca.braunit.weatherparser.taf.domain.Temperature;
+import ca.braunit.weatherparser.common.domain.TimeInfo;
+import ca.braunit.weatherparser.metar.util.CommonDecoder;
 
-	public static void deleteParsedContent(StringBuffer sb) {
-		if (sb.toString().contains(" ")) {
-			sb.delete(0, sb.indexOf(" ") + 1);
-		} else {
-			sb.delete(0, sb.length());
-		}
-	}
-
-	public static String getContentToParse(StringBuffer sb) {
-		
-		if (sb.length() == 0) {
-			return null;
-		} else if (sb.indexOf(" ") > -1) {
-			return sb.substring(0, sb.indexOf(" "));
-		} else {
-			return sb.toString();
-		}
-	}
+public class TemperatureDecoder {
 	
+	private static final String TEMPERATURE_PATTERN = "T(M)?(\\d){2}/(\\d){4}(z|Z)( |\\Z)(.)*";
+	
+	public static Temperature decodeObject(StringBuffer tafAsString) {
+
+		Temperature temperature = null;		
+		if (tafAsString.toString().matches(TEMPERATURE_PATTERN)) {
+			temperature = new Temperature();
+			
+			tafAsString.delete(0, 1);
+			int multiplier = 1;
+			if (tafAsString.toString().startsWith("M")) {
+				multiplier = -1;
+				tafAsString.delete(0, 1);
+			}
+			temperature.setTemperature(Integer.parseInt(tafAsString.substring(0,2)) * multiplier);
+			tafAsString.delete(0, 3);
+			TimeInfo time = new TimeInfo();
+			
+			time.setDayOfMonth(Integer.parseInt(tafAsString.substring(0,2)));
+			tafAsString.delete(0, 2);
+			time.setHour(Integer.parseInt(tafAsString.substring(0,2)));
+			time.setMinute(0);
+			temperature.setTime(time);
+			
+			CommonDecoder.deleteParsedContent(tafAsString);
+		}
+		return temperature;
+
+	}
+
+
 }

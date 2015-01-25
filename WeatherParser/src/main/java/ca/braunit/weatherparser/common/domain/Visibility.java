@@ -20,7 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.domain;
+package ca.braunit.weatherparser.common.domain;
 
 import java.math.BigDecimal;
 
@@ -31,6 +31,7 @@ public class Visibility {
 	private String visibilityUnitOfMeasure = "M";
 	private String direction = null;
 	private boolean ndv = false;
+	private boolean greaterThan;
 
 	public boolean isCavok() {
 		return cavok;
@@ -71,6 +72,12 @@ public class Visibility {
 	 */
 	public void setNdv(boolean ndv) {
 		this.ndv = ndv;
+	}
+	public boolean isGreaterThan() {
+		return greaterThan;
+	}
+	public void setGreaterThan(boolean greaterThan) {
+		this.greaterThan = greaterThan;
 	}
 
 	

@@ -20,27 +20,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.common.domain;
 
-public class CommonDecoder {
-
-	public static void deleteParsedContent(StringBuffer sb) {
-		if (sb.toString().contains(" ")) {
-			sb.delete(0, sb.indexOf(" ") + 1);
-		} else {
-			sb.delete(0, sb.length());
-		}
-	}
-
-	public static String getContentToParse(StringBuffer sb) {
-		
-		if (sb.length() == 0) {
-			return null;
-		} else if (sb.indexOf(" ") > -1) {
-			return sb.substring(0, sb.indexOf(" "));
-		} else {
-			return sb.toString();
-		}
-	}
+public class ValidityPeriod {
 	
+	private Integer fromDayOfMonth;
+	private Integer fromHour;
+
+	private Integer toDayOfMonth;
+	private Integer toHour;
+
+	public Integer getFromDayOfMonth() {
+		return fromDayOfMonth;
+	}
+	public void setFromDayOfMonth(Integer fromDayOfMonth) {
+		this.fromDayOfMonth = fromDayOfMonth;
+	}
+	public Integer getFromHour() {
+		return fromHour;
+	}
+	public void setFromHour(Integer fromHour) {
+		this.fromHour = fromHour;
+	}
+	public Integer getToDayOfMonth() {
+		return toDayOfMonth;
+	}
+	public void setToDayOfMonth(Integer toDayOfMonth) {
+		this.toDayOfMonth = toDayOfMonth;
+	}
+	public Integer getToHour() {
+		return toHour;
+	}
+	public void setToHour(Integer toHour) {
+		this.toHour = toHour;
+	}
+
+
 }

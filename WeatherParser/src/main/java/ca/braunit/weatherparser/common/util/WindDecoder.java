@@ -20,30 +20,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.common.util;
 
-import ca.braunit.weatherparser.metar.domain.Wind;
+import ca.braunit.weatherparser.common.domain.Wind;
+import ca.braunit.weatherparser.metar.util.CommonDecoder;
 
 public class WindDecoder {
 	
-	private static final String KILOMETERS_PER_HOUR = "KMH";
-	private static final String MILES_PER_HOUR = "MPS";
-	private static final String KNOTS = "KT";
-	private static final String WIND_GUSTS_DIVIDER = "G";
 	private static final String VARIABLE_WIND_DIVIDER = "V";
 
 	private static final int WINDDIRECTION_LENGTH = 3;
 	private static final int WINDSPEED_LENGTH = 2;
 
-	private static final String WIND_PATTERN = String.format("[\\d]{%s}(%s|%s|%s.)", WINDDIRECTION_LENGTH+WINDSPEED_LENGTH, KILOMETERS_PER_HOUR, MILES_PER_HOUR, KNOTS);
-	private static final String WIND_WITH_GUSTS_PATTERN = String.format("[\\d]{%s}(%s)[\\d]{%s}(%s|%s|%s.)", WINDDIRECTION_LENGTH+WINDSPEED_LENGTH, WIND_GUSTS_DIVIDER, WINDSPEED_LENGTH, KILOMETERS_PER_HOUR, MILES_PER_HOUR, KNOTS);
-	private static final String VARIABLE_WIND_PATTERN = String.format("[\\d]{%s}%s[\\d]{%s}", WINDDIRECTION_LENGTH, VARIABLE_WIND_DIVIDER, WINDDIRECTION_LENGTH);
+	private static final String WIND_PATTERN = "[\\d]{5}(KMH|MPS|KT)( |\\Z)(.)*";
+	private static final String WIND_WITH_GUSTS_PATTERN = "[\\d]{5}(G)[\\d]{2}(KMH|MPS|KT)( |\\Z)(.)*";
+	private static final String VARIABLE_WIND_PATTERN = "[\\d]{3}V[\\d]{3}( |\\Z)(.)*";
 	
 	public static Wind decodeObject(StringBuffer metarAsString) {
 		Wind wind = new Wind();
-		if(metarAsString.substring(0,WINDDIRECTION_LENGTH+WINDSPEED_LENGTH+KILOMETERS_PER_HOUR.length()).matches(WIND_PATTERN)) {
+		if(metarAsString.toString().matches(WIND_PATTERN)) {
 			decodeWindPattern(metarAsString, wind);
-		} else if(metarAsString.substring(0,WINDDIRECTION_LENGTH+WINDSPEED_LENGTH+VARIABLE_WIND_DIVIDER.length()+WINDSPEED_LENGTH+KILOMETERS_PER_HOUR.length()).matches(WIND_WITH_GUSTS_PATTERN)) {
+		} else if(metarAsString.toString().matches(WIND_WITH_GUSTS_PATTERN)) {
 			decodeWindWithGustsPattern(metarAsString, wind);
 		}
 		decodeVariableWindDirection(metarAsString, wind);
@@ -69,8 +66,8 @@ public class WindDecoder {
 	}
 		
 	private static void decodeSpeedUnitOfMeasure(StringBuffer metarAsString, Wind wind) {
-		wind.setSpeedUnitOfMeasure(metarAsString.substring(0,KILOMETERS_PER_HOUR.length()).trim());
-		metarAsString.delete(0, wind.getSpeedUnitOfMeasure().length()+1);
+		wind.setSpeedUnitOfMeasure(CommonDecoder.getContentToParse(metarAsString));
+		CommonDecoder.deleteParsedContent(metarAsString);
 	}
 	
 	private static void decodeWindSpeedGusts(StringBuffer metarAsString, Wind wind) {
