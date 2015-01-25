@@ -48,37 +48,37 @@ public class CloudsDecoder {
 		CLOUD_AMOUNT_MAP.put("OVC", "Overcast");
 	}
 
-	public static List<Clouds> decodeObject(StringBuffer metarAsString) {
+	public static List<Clouds> decodeObject(StringBuffer weatherSb) {
 
 		List<Clouds> cloudsList = new ArrayList<Clouds>();
 		
-		while (metarAsString.substring(0, metarAsString.indexOf(" ")).toString().matches(CLOUDS_PATTERN)) {
+		while (weatherSb.substring(0, weatherSb.indexOf(" ")).toString().matches(CLOUDS_PATTERN)) {
 
 			Clouds clouds = new Clouds();
 			
-			if (metarAsString.substring(0, metarAsString.indexOf(" ")).toString().matches(CLOUD_AMOUNT_AND_HEIGHT_PATTERN)) {
-				clouds.setCloudAmountCode(metarAsString.substring(0,3));
+			if (weatherSb.substring(0, weatherSb.indexOf(" ")).toString().matches(CLOUD_AMOUNT_AND_HEIGHT_PATTERN)) {
+				clouds.setCloudAmountCode(weatherSb.substring(0,3));
 				clouds.setCloudAmount(CLOUD_AMOUNT_MAP.get(clouds.getCloudAmountCode()));
-				clouds.setCloudHeight(Integer.parseInt(metarAsString.substring(3, 6))*100);
-				if (!metarAsString.substring(6, 7).equals(" ")) {
-					if (metarAsString.substring(6).startsWith("TCU")) {
+				clouds.setCloudHeight(Integer.parseInt(weatherSb.substring(3, 6))*100);
+				if (!weatherSb.substring(6, 7).equals(" ")) {
+					if (weatherSb.substring(6).startsWith("TCU")) {
 						clouds.setTcu(true);
-					} else if (metarAsString.substring(6).startsWith("CB")) {
+					} else if (weatherSb.substring(6).startsWith("CB")) {
 						clouds.setCb(true);
-					} else if (metarAsString.substring(6).startsWith("ACC")) {
+					} else if (weatherSb.substring(6).startsWith("ACC")) {
 						clouds.setAcc(true);
 					}
 				}
-			} else if (metarAsString.substring(0, metarAsString.indexOf(" ")).toString().matches(VERTICAL_VISIBILITY_PATTERN)) {
-				clouds.setVerticalVisability(Integer.parseInt(metarAsString.substring(2, 5))*100);
-			} else if (metarAsString.toString().startsWith("NSC")) {
+			} else if (weatherSb.substring(0, weatherSb.indexOf(" ")).toString().matches(VERTICAL_VISIBILITY_PATTERN)) {
+				clouds.setVerticalVisability(Integer.parseInt(weatherSb.substring(2, 5))*100);
+			} else if (weatherSb.toString().startsWith("NSC")) {
 				clouds.setNsc(true);
-			} else if (metarAsString.toString().startsWith("NCD")) {
+			} else if (weatherSb.toString().startsWith("NCD")) {
 				clouds.setNcd(true);
-			} else if (metarAsString.toString().startsWith("SKC")) {
+			} else if (weatherSb.toString().startsWith("SKC") || weatherSb.toString().startsWith("CLR")) {
 				clouds.setSkyClear(true);
 			}
-			CommonDecoder.deleteParsedContent(metarAsString);
+			CommonDecoder.deleteParsedContent(weatherSb);
 			
 			cloudsList.add(clouds);
 			
