@@ -47,10 +47,10 @@ public class RunwayVisualRangeDecoder {
 			metarAsString.delete(0, rvr.getRunway().length()+1);
 			
 			//Extract P|M
-			if (metarAsString.substring(0,1).equals("M")) {
+			if (metarAsString.substring(0,1).equals(WeatherParserConstants.LESS_THAN_CODE)) {
 				rvr.setLessThan(true);
 				metarAsString.delete(0, 1);
-			} else if (metarAsString.substring(0, 1).equals("P")) {
+			} else if (metarAsString.substring(0, 1).equals(WeatherParserConstants.MORE_THAN_CODE)) {
 				rvr.setMoreThan(true);
 				metarAsString.delete(0, 1);
 			}

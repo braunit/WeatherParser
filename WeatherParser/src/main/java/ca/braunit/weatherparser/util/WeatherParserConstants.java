@@ -54,4 +54,18 @@ public final class WeatherParserConstants {
 	 */
 	public static final String UNIT_OF_MEASURE_KNOTS = "KT";
 
+	/**
+	 * The code for indicating less than
+	 */
+	public static final String LESS_THAN_CODE = "M";
+	
+	/**
+	 * The code for indicating more than
+	 */
+	public static final String MORE_THAN_CODE = "P";
+	
+	/**
+	 * The code for indicating negative values
+	 */
+	public static final String NEGATIVE_VALUE_CODE = "M";
 }

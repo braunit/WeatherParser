@@ -22,6 +22,8 @@
  */
 package ca.braunit.weatherparser.metar.domain;
 
+import ca.braunit.weatherparser.util.WeatherParserConstants;
+
 public class RunwayVisualRange {
 
 	private String runway;
@@ -29,7 +31,7 @@ public class RunwayVisualRange {
 	private boolean lessThan = false;
 	private boolean moreThan = false;
 	private Integer visibileRange;
-	private String unitOfMeasure = "M";
+	private String unitOfMeasure = WeatherParserConstants.UNIT_OF_MEASURE_METER;
 	private boolean upwardTendency;
 	private boolean downwardTendency;
 	private boolean noTendency;

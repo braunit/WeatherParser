@@ -23,6 +23,7 @@
 package ca.braunit.weatherparser.taf.util;
 
 import ca.braunit.weatherparser.taf.domain.Temperature;
+import ca.braunit.weatherparser.util.WeatherParserConstants;
 import ca.braunit.weatherparser.common.domain.TimeInfo;
 import ca.braunit.weatherparser.metar.util.CommonDecoder;
 
@@ -38,7 +39,7 @@ public class TemperatureDecoder {
 			
 			tafAsString.delete(0, 1);
 			int multiplier = 1;
-			if (tafAsString.toString().startsWith("M")) {
+			if (tafAsString.toString().startsWith(WeatherParserConstants.NEGATIVE_VALUE_CODE)) {
 				multiplier = -1;
 				tafAsString.delete(0, 1);
 			}
