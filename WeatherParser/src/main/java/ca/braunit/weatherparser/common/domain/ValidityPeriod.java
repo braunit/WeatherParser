@@ -22,38 +22,90 @@
  */
 package ca.braunit.weatherparser.common.domain;
 
+/**
+ * This class represents the period of time the weather data/forecast
+ * is valid. Usually the time range only includes the day of the month
+ * and the hour. Important information such as month and year is 
+ * missing. This information has to be retrieved from other sources.
+ * @author Alexander Braun
+ */
 public class ValidityPeriod {
 	
 	private Integer fromDayOfMonth;
 	private Integer fromHour;
-
 	private Integer toDayOfMonth;
 	private Integer toHour;
 
+	/**
+	 * returns the day of the month (1 = January, 12 = December)
+	 * - the start of the period
+	 * @return the day of the month (start of the period)
+	 */
 	public Integer getFromDayOfMonth() {
 		return fromDayOfMonth;
 	}
+	
+	/**
+	 * sets the day of the month (1 = January, 12 = December)
+	 * - the start of the period
+	 * @param fromDayOfMonth the day of the month (start of the period)
+	 */
 	public void setFromDayOfMonth(Integer fromDayOfMonth) {
 		this.fromDayOfMonth = fromDayOfMonth;
 	}
+	
+	/**
+	 * returns the hour of the start of the period - depending on the type of 
+	 * weather report the valid range is 0 to 24
+	 * @return the hour (start of the period)
+	 */
 	public Integer getFromHour() {
 		return fromHour;
 	}
+	
+	/**
+	 * sets the hour of the start of the period - depending on the type of 
+	 * weather report the valid range is 0 to 24
+	 * @param fromHour the hour (start of the period)
+	 */
 	public void setFromHour(Integer fromHour) {
 		this.fromHour = fromHour;
 	}
+	
+	/**
+	 * returns the day of the month (1 = January, 12 = December)
+	 * - the end of the period
+	 * @return the day of the month (end of the period)
+	 */
 	public Integer getToDayOfMonth() {
 		return toDayOfMonth;
 	}
+	
+	/**
+	 * sets the day of the month (1 = January, 12 = December)
+	 * - the end of the period
+	 * @param toDayOfMonth the day of the month (end of the period)
+	 */
 	public void setToDayOfMonth(Integer toDayOfMonth) {
 		this.toDayOfMonth = toDayOfMonth;
 	}
+	
+	/**
+	 * returns the hour of the end of the period - depending on the type of 
+	 * weather report the valid range is 0 to 24
+	 * @return the hour (end of the period)
+	 */
 	public Integer getToHour() {
 		return toHour;
 	}
+	
+	/**
+	 * sets the hour of the end of the period - depending on the type of 
+	 * weather report the valid range is 0 to 24
+	 * @param toHour the hour (end of the period)
+	 */
 	public void setToHour(Integer toHour) {
 		this.toHour = toHour;
 	}
-
 
 }

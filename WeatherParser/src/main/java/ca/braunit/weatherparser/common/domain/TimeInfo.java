@@ -22,27 +22,66 @@
  */
 package ca.braunit.weatherparser.common.domain;
 
+/**
+ * This class represents the basic time information that is included 
+ * within a weather report. The time information usually only includes
+ * the day of the month, the hour and the minute. Important information
+ * such as month and year is missing. This information has to be retrieved
+ * from other sources.
+ * @author Alexander Braun
+ */
 public class TimeInfo {
 
 	private Integer dayOfMonth;
 	private Integer hour;
 	private Integer minute;
 
+	/**
+	 * returns the day of the month (1 = January, 12 = December)
+	 * @return  the day of the month
+	 */
 	public Integer getDayOfMonth() {
 		return dayOfMonth;
 	}
+	
+	/**
+	 * sets  the day of the month (1 = January, 12 = December)
+	 * @param dayOfMonth  the day of the month
+	 */
 	public void setDayOfMonth(Integer dayOfMonth) {
 		this.dayOfMonth = dayOfMonth;
 	}
+	
+	/**
+	 * returns the hour - depending on the type of weather report the valid
+	 * range is 0 to 24
+	 * @return the hour
+	 */
 	public Integer getHour() {
 		return hour;
 	}
+	
+	/**
+	 * sets the hour - depending on the type of weather report the valid
+	 * range is 0 to 24
+	 * @param hour the hour
+	 */
 	public void setHour(Integer hour) {
 		this.hour = hour;
 	}
+	
+	/**
+	 * returns the minute
+	 * @return the minute
+	 */
 	public Integer getMinute() {
 		return minute;
 	}
+	
+	/**
+	 * sets the minute
+	 * @param minute the minute
+	 */
 	public void setMinute(Integer minute) {
 		this.minute = minute;
 	}
