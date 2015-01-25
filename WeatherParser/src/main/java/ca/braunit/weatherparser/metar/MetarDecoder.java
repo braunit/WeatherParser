@@ -35,6 +35,11 @@ import ca.braunit.weatherparser.metar.util.RunwayVisualRangeDecoder;
 import ca.braunit.weatherparser.metar.util.TemperatureAndDewPointDecoder;
 import ca.braunit.weatherparser.metar.util.WindShearDecoder;
 
+/**
+ * This class implements the functionality to decode METAR (Meteorological Terminal Aviation 
+ * Routine Weather Report) weather data.
+ * @author Alexander Braun
+ */
 public class MetarDecoder {
 
 	private static final String METAR = "METAR";
@@ -44,65 +49,72 @@ public class MetarDecoder {
 
 	private static final String ICAO_CODE_PATTERN = "[A-Za-z]{4}";
 
-	public static Metar decodeMetar(String metarAsString) throws DecoderException {
-		return decodeObject(new StringBuffer(metarAsString.trim()));
+	/**
+	 * This method decodes TAF METAR (Meteorological Terminal Aviation 
+	 * Routine Weather Report) weather data.
+	 * @param weatherString the weather String encoded in METAR format.
+	 * @return a {@link Metar} object 
+	 * @throws DecoderException in case of missing or unknown patterns.
+	 */
+	public static Metar decodeMetar(String weatherString) throws DecoderException {
+		return decodeObject(new StringBuffer(weatherString.trim()));
 	}
 
-	public static Metar decodeObject(StringBuffer metarAsString) throws DecoderException {
+	private static Metar decodeObject(StringBuffer weatherSb) throws DecoderException {
 		Metar metar = new Metar();
-		deodeReportType(metar, metarAsString);
-		decodeAirportIcaoCode(metar, metarAsString);
+		deodeReportType(metar, weatherSb);
+		decodeAirportIcaoCode(metar, weatherSb);
 		
-		metar.setReportTime(TimeInfoDecoder.decodeObject(metarAsString, true));
+		metar.setReportTime(TimeInfoDecoder.decodeObject(weatherSb, true));
 		
-		decodeAutomatedObservation(metar, metarAsString);
+		decodeAutomatedObservation(metar, weatherSb);
 		
-		metar.setWind(WindDecoder.decodeObject(metarAsString));
-		metar.setVisibility(VisibilityDecoder.decodeObject(metarAsString));
-		metar.setRunwayVisualRanges(RunwayVisualRangeDecoder.decodeObject(metarAsString));
+		metar.setWind(WindDecoder.decodeObject(weatherSb));
+		metar.setVisibility(VisibilityDecoder.decodeObject(weatherSb));
+		metar.setRunwayVisualRanges(RunwayVisualRangeDecoder.decodeObject(weatherSb));
 		
-		metar.setPresentWeather(WeatherDecoder.decodeObject(metarAsString));
+		metar.setPresentWeather(WeatherDecoder.decodeObject(weatherSb));
 		
-		metar.setClouds(CloudsDecoder.decodeObject(metarAsString));
+		metar.setClouds(CloudsDecoder.decodeObject(weatherSb));
 		
-		metar.setTemperatureAndDewPoint(TemperatureAndDewPointDecoder.decodeObject(metarAsString));
+		metar.setTemperatureAndDewPoint(TemperatureAndDewPointDecoder.decodeObject(weatherSb));
 		
-		metar.setPressure(PressureDecoder.decodeObject(metarAsString));
+		metar.setPressure(PressureDecoder.decodeObject(weatherSb));
 		
-		metar.setRecentWeather(WeatherDecoder.decodeObject(metarAsString));
+		metar.setRecentWeather(WeatherDecoder.decodeObject(weatherSb));
 		
-		metar.setWindShear(WindShearDecoder.decodeObject(metarAsString));
+		metar.setWindShear(WindShearDecoder.decodeObject(weatherSb));
 		
-		metar.setRemarks(RemarksDecoder.decodeObject(metarAsString));
+		metar.setRemarks(RemarksDecoder.decodeObject(weatherSb));
 		
 		return metar;
 	}
 	
-	private static void deodeReportType(Metar metar, StringBuffer metarAsString) {
-		if (metarAsString.substring(0, METAR.length()).equals(METAR)) {
+	private static void deodeReportType(Metar metar, StringBuffer weatherSb) {
+		if (weatherSb.substring(0, METAR.length()).equals(METAR)) {
 			metar.setMetarType(true);
-			metarAsString.delete(0, METAR.length()+1);
-		} else if (metarAsString.substring(0, SPECI.length()).equals(SPECI)) {
+			weatherSb.delete(0, METAR.length()+1);
+		} else if (weatherSb.substring(0, SPECI.length()).equals(SPECI)) {
 			metar.setSpeciType(true);
-			metarAsString.delete(0, SPECI.length()+1);
+			weatherSb.delete(0, SPECI.length()+1);
 		} else {
 			metar.setMetarType(true);
 		}
 	}
 	
-	private static void decodeAirportIcaoCode(Metar metar, StringBuffer metarAsString) throws DecoderException {
-		if (metarAsString.substring(0,metarAsString.indexOf(" ")).matches(ICAO_CODE_PATTERN)) {
-			metar.setAirportIcaoCode(metarAsString.substring(0,metarAsString.indexOf(" ")));
-			metarAsString.delete(0, metarAsString.indexOf(" ")+1);
+	private static void decodeAirportIcaoCode(Metar metar, StringBuffer weatherSb) throws DecoderException {
+		if (weatherSb.substring(0,weatherSb.indexOf(" ")).matches(ICAO_CODE_PATTERN)) {
+			metar.setAirportIcaoCode(weatherSb.substring(0,weatherSb.indexOf(" ")));
+			weatherSb.delete(0, weatherSb.indexOf(" ")+1);
 		} else {
 			throw new DecoderException("No Airport ICAO Code available");
 		}
 	}
 	
-	private static void decodeAutomatedObservation(Metar metar, StringBuffer metarAsString) {
-		if(metarAsString.substring(0,AUTOMATED_OBSERVATION.length()).equals(AUTOMATED_OBSERVATION)) {
+	private static void decodeAutomatedObservation(Metar metar, StringBuffer weatherSb) {
+		if(weatherSb.substring(0,AUTOMATED_OBSERVATION.length()).equals(AUTOMATED_OBSERVATION)) {
 			metar.setAutomatedObservation(true);
-			metarAsString.delete(0, AUTOMATED_OBSERVATION.length()+1);
+			weatherSb.delete(0, AUTOMATED_OBSERVATION.length()+1);
 		}
 	}
 }
