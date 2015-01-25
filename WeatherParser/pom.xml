@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 
 	<name>WeatherParser</name>
-	<description>An application that decodes METAR and TAF Weather Strings.</description>
+	<description>An application that decodes METAR and TAF weather strings.</description>
 	<url>http://braun-it.ca</url>
 	
 	<licenses>
