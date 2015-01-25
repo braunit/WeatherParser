@@ -22,14 +22,36 @@
  */
 package ca.braunit.weatherparser.util;
 
+/**
+ * This utility class is used for storing the constant values
+ * used within the WeatherParser.
+ * @author Alexander Braun
+ */
 public final class WeatherParserConstants {
 
+	/**
+	 * Unit of measure, Abbreviation for Meter
+	 */
 	public static final String UNIT_OF_MEASURE_METER = "M";
+	
+	/**
+	 * Unit of measure, Abbreviation for Feet
+	 */
 	public static final String UNIT_OF_MEASURE_FEET = "FT";
-	public static final String UNIT_OF_MEASURE_NAUTICAL_MILES = "SM";
+	
+	/**
+	 * Unit of measure, Abbreviation for Nautical Miles
+	 */
+	public static final String UNIT_OF_MEASURE_NAUTICAL_MILES = "NM";
+	
+	/**
+	 * Unit of measure, Abbreviation for Statute Miles
+	 */
 	public static final String UNIT_OF_MEASURE_STATUTE_MILES = "SM";
 	
+	/**
+	 * Unit of measure, Abbreviation for Knots
+	 */
 	public static final String UNIT_OF_MEASURE_KNOTS = "KT";
 
-	
 }

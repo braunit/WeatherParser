@@ -27,6 +27,7 @@ import java.math.MathContext;
 
 import ca.braunit.weatherparser.common.domain.Visibility;
 import ca.braunit.weatherparser.metar.util.CommonDecoder;
+import ca.braunit.weatherparser.util.WeatherParserConstants;
 
 public class VisibilityDecoder {
 
@@ -55,10 +56,10 @@ public class VisibilityDecoder {
 				visibility.setGreaterThan(true);
 				metarAsString.delete(0, 1);
 			}
-			String visibilityString = metarAsString.substring(0, metarAsString.indexOf("SM"));
+			String visibilityString = metarAsString.substring(0, metarAsString.indexOf(WeatherParserConstants.UNIT_OF_MEASURE_STATUTE_MILES));
 			visibility.setVisibility(new BigDecimal(visibilityString));
 			metarAsString.delete(0, visibilityString.length()+3);
-			visibility.setVisibilityUnitOfMeasure("SM");
+			visibility.setVisibilityUnitOfMeasure(WeatherParserConstants.UNIT_OF_MEASURE_STATUTE_MILES);
 		} else if (metarAsString.toString().matches(STANDARD_VISIBILITY_PATTERN)) {
 			visibility.setVisibility(new BigDecimal(metarAsString.substring(0, 4)));
 			metarAsString.delete(0, 4);
@@ -82,10 +83,10 @@ public class VisibilityDecoder {
 			}
 			
 			BigDecimal numerator = new BigDecimal(metarAsString.substring(0, metarAsString.indexOf("/")));
-			BigDecimal divisor = new BigDecimal(metarAsString.substring(metarAsString.indexOf("/")+1,metarAsString.indexOf("SM")));
+			BigDecimal divisor = new BigDecimal(metarAsString.substring(metarAsString.indexOf("/")+1,metarAsString.indexOf(WeatherParserConstants.UNIT_OF_MEASURE_STATUTE_MILES)));
 			visibility.setVisibility(numerator.divide(divisor, MathContext.DECIMAL32).add(additionalStatuteMiles));
 			CommonDecoder.deleteParsedContent(metarAsString);
-			visibility.setVisibilityUnitOfMeasure("SM");
+			visibility.setVisibilityUnitOfMeasure(WeatherParserConstants.UNIT_OF_MEASURE_STATUTE_MILES);
 		}
 		
 		return visibility;

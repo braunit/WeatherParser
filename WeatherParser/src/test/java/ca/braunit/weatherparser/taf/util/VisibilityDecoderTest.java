@@ -33,6 +33,7 @@ import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.taf.ExampleMessagesTaf;
 import ca.braunit.weatherparser.taf.TafDecoder;
 import ca.braunit.weatherparser.taf.domain.Taf;
+import ca.braunit.weatherparser.util.WeatherParserConstants;
 
 public class VisibilityDecoderTest {
 
@@ -45,7 +46,7 @@ public class VisibilityDecoderTest {
 	public void testVisibility() throws DecoderException {
 		Taf taf = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
 		assertEquals(new BigDecimal("6"), taf.getVisibility().getVisibility());
-		assertEquals("SM", taf.getVisibility().getVisibilityUnitOfMeasure());
+		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_STATUTE_MILES, taf.getVisibility().getVisibilityUnitOfMeasure());
 		assertTrue(taf.getVisibility().isGreaterThan());
 	}
 

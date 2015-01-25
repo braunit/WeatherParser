@@ -34,6 +34,7 @@ import ca.braunit.weatherparser.taf.ExampleMessagesTaf;
 import ca.braunit.weatherparser.taf.TafDecoder;
 import ca.braunit.weatherparser.taf.domain.Taf;
 import ca.braunit.weatherparser.taf.domain.ExpectedChange.ChangeType;
+import ca.braunit.weatherparser.util.WeatherParserConstants;
 
 public class ExpectedChangeDecoderTest {
 
@@ -48,7 +49,7 @@ public class ExpectedChangeDecoderTest {
 		
 		assertEquals(ChangeType.FROM, taf.getExpectedChanges().get(1).getChangeType());
 		assertEquals(new BigDecimal("1.5"), taf.getExpectedChanges().get(1).getVisibility().getVisibility());
-		assertEquals("SM", taf.getExpectedChanges().get(1).getVisibility().getVisibilityUnitOfMeasure());
+		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_STATUTE_MILES, taf.getExpectedChanges().get(1).getVisibility().getVisibilityUnitOfMeasure());
 		assertTrue(taf.getExpectedChanges().get(1).getWindShear().isPotentialWindShear());
 		assertEquals(2, taf.getExpectedChanges().get(1).getIcingConditions().getIcingIntensityCode().intValue());
 		assertEquals(3000, taf.getExpectedChanges().get(1).getIcingConditions().getIcingLayerBase().intValue());
