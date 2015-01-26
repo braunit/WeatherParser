@@ -50,6 +50,8 @@ public class Metar {
 	private List<WindShear> windShear;
 	private Remarks remarks;
 
+	private String unparsedContent;
+	
 	public String getAirportIcaoCode() {
 		return airportIcaoCode;
 	}
@@ -176,6 +178,14 @@ public class Metar {
 
 	public void setRemarks(Remarks remarks) {
 		this.remarks = remarks;
+	}
+
+	public String getUnparsedContent() {
+		return unparsedContent;
+	}
+
+	public void setUnparsedContent(String unparsedContent) {
+		this.unparsedContent = unparsedContent;
 	}
 
 }

@@ -54,6 +54,8 @@ public class Taf {
 	private Temperature maximumTemperature; 
 	private Temperature minimumTemperature; 
 	
+	private String unparsedContent;
+	
 	public boolean isUpdateOverPreviousReport() {
 		return updateOverPreviousReport;
 	}
@@ -172,6 +174,14 @@ public class Taf {
 
 	public void setMinimumTemperature(Temperature minimumTemperature) {
 		this.minimumTemperature = minimumTemperature;
+	}
+
+	public String getUnparsedContent() {
+		return unparsedContent;
+	}
+
+	public void setUnparsedContent(String unparsedContent) {
+		this.unparsedContent = unparsedContent;
 	}
 	
 }

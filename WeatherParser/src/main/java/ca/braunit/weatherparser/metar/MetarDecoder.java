@@ -88,6 +88,10 @@ public class MetarDecoder {
 		
 		metar.setRemarks(RemarksDecoder.decodeObject(weatherSb));
 		
+		if (weatherSb.length() > 0) {
+			metar.setUnparsedContent(weatherSb.toString());
+		}
+		
 		return metar;
 	}
 	

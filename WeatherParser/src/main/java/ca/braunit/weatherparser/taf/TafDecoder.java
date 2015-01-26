@@ -83,6 +83,11 @@ public class TafDecoder {
 		}
 		
 		taf.setExpectedChanges(ExpectedChangeDecoder.decodeObject(weatherSb));
+		
+		if (weatherSb.length() > 0) {
+			taf.setUnparsedContent(weatherSb.toString());
+		}
+		
 		return taf;
 	}
 
