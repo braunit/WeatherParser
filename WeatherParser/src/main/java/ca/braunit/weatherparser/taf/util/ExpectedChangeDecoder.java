@@ -29,6 +29,7 @@ import ca.braunit.weatherparser.common.util.CloudsDecoder;
 import ca.braunit.weatherparser.common.util.TimeInfoDecoder;
 import ca.braunit.weatherparser.common.util.ValidityPeriodDecoder;
 import ca.braunit.weatherparser.common.util.VisibilityDecoder;
+import ca.braunit.weatherparser.common.util.WeatherDecoder;
 import ca.braunit.weatherparser.common.util.WindDecoder;
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.metar.util.CommonDecoder;
@@ -55,6 +56,7 @@ public class ExpectedChangeDecoder {
 			
 			expectedChange.setWind(WindDecoder.decodeObject(tafAsString));
 			expectedChange.setVisibility(VisibilityDecoder.decodeObject(tafAsString));
+			expectedChange.setForecastWeather(WeatherDecoder.decodeObject(tafAsString));
 			expectedChange.setClouds(CloudsDecoder.decodeObject(tafAsString));
 			expectedChange.setIcingConditions(IcingConditionsDecoder.decodeObject(tafAsString));
 			expectedChange.setTurbulence(TurbulenceDecoder.decodeObject(tafAsString));
@@ -102,7 +104,7 @@ public class ExpectedChangeDecoder {
 		} else {
 			expectedChange.setValidityPeriod(ValidityPeriodDecoder.decodeObject(tafAsString));
 		}
-		CommonDecoder.deleteParsedContent(tafAsString);
+		//CommonDecoder.deleteParsedContent(tafAsString);
 	}
 	
 }

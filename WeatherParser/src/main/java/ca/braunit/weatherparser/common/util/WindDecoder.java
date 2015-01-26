@@ -43,7 +43,9 @@ public class WindDecoder {
 		} else if(metarAsString.toString().matches(WIND_WITH_GUSTS_PATTERN)) {
 			decodeWindWithGustsPattern(metarAsString, wind);
 		}
-		decodeVariableWindDirection(metarAsString, wind);
+		if(metarAsString.toString().matches(VARIABLE_WIND_PATTERN)) {
+			decodeVariableWindDirection(metarAsString, wind);			
+		}
 		return wind;
 	}
 

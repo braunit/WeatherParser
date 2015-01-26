@@ -70,4 +70,22 @@ public class ExpectedChangeDecoderTest {
 		
 	}
 
+	
+	@Test
+	/**
+	 * Check ExpectedChange Decoding empty probability
+	 * 
+	 * @throws DecoderException
+	 */
+	public void testEmptyProbability() throws DecoderException {
+		Taf taf = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_2);
+		
+		assertEquals(ChangeType.PROBABILITY, taf.getExpectedChanges().get(0).getChangeType());
+
+		assertEquals(ChangeType.TEMPORARY, taf.getExpectedChanges().get(1).getChangeType());
+		
+	}
+
+	
+	
 }

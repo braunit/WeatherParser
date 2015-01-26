@@ -44,7 +44,7 @@ public final class ExampleMessagesMetar {
 	 * CAVOK <br>
 	 * Runway Visual Range in meter
 	 */
-	public static final String METAR_EXAMPLE_3 = "BIKF 250600Z 02013KT CAVOK R20/0900 07/04 Q1020";
+	public static final String METAR_EXAMPLE_3 = "CYVR 250600Z 02013KT CAVOK R20/0900 07/04 Q1020";
 
 	/**
 	 * Fraction Statute Miles
