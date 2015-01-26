@@ -29,7 +29,7 @@ import ca.braunit.weatherparser.metar.domain.WindShear;
 
 public class WindShearDecoder {
 
-	private static final String WIND_SHEAR_PATTERN = "WS ((RWY([\\d]{2}(L|R|C)?))|ALL RWY).*";
+	private static final String WIND_SHEAR_PATTERN = "WS ((RWY([\\d]{2}(L|R|C)?))|ALL RWY)( |\\Z)(.)*";
 
 	public static List<WindShear> decodeObject(StringBuffer metarAsString) {
 		List<WindShear> windShearList = new ArrayList<WindShear>();
@@ -44,8 +44,8 @@ public class WindShearDecoder {
 				metarAsString.delete(0, 7);
 			} else {
 				metarAsString.delete(0, 3);				
-				windShear.setRunwayIdentifier(metarAsString.substring(0,metarAsString.indexOf(" ")));
-				metarAsString.delete(0,metarAsString.indexOf(" ")+1);
+				windShear.setRunwayIdentifier(CommonDecoder.getContentToParse(metarAsString));
+				CommonDecoder.deleteParsedContent(metarAsString);
 			}
 			windShearList.add(windShear);
 		}

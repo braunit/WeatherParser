@@ -78,13 +78,13 @@ public class VisibilityDecoder {
 		} else if (metarAsString.toString().matches(STANDARD_WITH_DIRECTION_VISIBILITY_PATTERN)) {
 			visibility.setVisibility(new BigDecimal(metarAsString.substring(0, 4))); 
 			metarAsString.delete(0, 4);
-			visibility.setDirection(metarAsString.substring(0, metarAsString.indexOf(" ")));
-			metarAsString.delete(0, visibility.getDirection().length()+1);
+			visibility.setDirection(CommonDecoder.getContentToParse(metarAsString));
+			CommonDecoder.deleteParsedContent(metarAsString);
 		} else if (metarAsString.toString().matches(STATUTE_MILE_FRACTION_VISIBILITY_PATTERN)) {		
 			//Check if 
 			BigDecimal additionalStatuteMiles = BigDecimal.ZERO;
 			if (" ".equals(metarAsString.substring(1, 2))) {
-				additionalStatuteMiles = new BigDecimal(metarAsString.substring(0, metarAsString.indexOf(" ")));
+				additionalStatuteMiles = new BigDecimal(CommonDecoder.getContentToParse(metarAsString));
 				CommonDecoder.deleteParsedContent(metarAsString);
 			}
 			

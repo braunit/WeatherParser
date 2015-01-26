@@ -107,7 +107,7 @@ public class RunwayVisualRangeDecoder {
 
 				
 			}
-			metarAsString.delete(0, metarAsString.indexOf(" ") + 1);
+			CommonDecoder.deleteParsedContent(metarAsString);
 			
 			rvrList.add(rvr);
 		}

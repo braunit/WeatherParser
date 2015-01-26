@@ -29,6 +29,7 @@ import ca.braunit.weatherparser.common.util.WeatherDecoder;
 import ca.braunit.weatherparser.common.util.WindDecoder;
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.metar.domain.Metar;
+import ca.braunit.weatherparser.metar.util.CommonDecoder;
 import ca.braunit.weatherparser.metar.util.PressureDecoder;
 import ca.braunit.weatherparser.metar.util.RemarksDecoder;
 import ca.braunit.weatherparser.metar.util.RunwayVisualRangeDecoder;
@@ -47,7 +48,7 @@ public class MetarDecoder {
 	private static final String CORRECTED = "COR";
 	private static final String AUTOMATED_OBSERVATION = "AUTO";
 
-	private static final String ICAO_CODE_PATTERN = "[A-Za-z]{4}";
+	private static final String ICAO_CODE_PATTERN = "[A-Za-z]{4}( |\\Z)(.)*";
 
 	/**
 	 * This method decodes TAF METAR (Meteorological Terminal Aviation 
@@ -103,9 +104,9 @@ public class MetarDecoder {
 	}
 	
 	private static void decodeAirportIcaoCode(Metar metar, StringBuffer weatherSb) throws DecoderException {
-		if (weatherSb.substring(0,weatherSb.indexOf(" ")).matches(ICAO_CODE_PATTERN)) {
-			metar.setAirportIcaoCode(weatherSb.substring(0,weatherSb.indexOf(" ")));
-			weatherSb.delete(0, weatherSb.indexOf(" ")+1);
+		if (weatherSb.toString().matches(ICAO_CODE_PATTERN)) {
+			metar.setAirportIcaoCode(CommonDecoder.getContentToParse(weatherSb));
+			CommonDecoder.deleteParsedContent(weatherSb);
 		} else {
 			throw new DecoderException("No Airport ICAO Code available");
 		}

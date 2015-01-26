@@ -28,13 +28,13 @@ import ca.braunit.weatherparser.metar.util.CommonDecoder;
 
 public class TimeInfoDecoder {
 
-	private static final String TIME_INFO_PATTERN = "(\\d){6}(z|Z)?";
+	private static final String TIME_INFO_PATTERN = "(\\d){6}(z|Z)?( |\\Z)(.)*";
 
 	public static TimeInfo decodeObject(StringBuffer tafAsString, boolean required) throws DecoderException {
 
 		TimeInfo timeInfo = new TimeInfo();
 		
-		if (tafAsString.substring(0,tafAsString.indexOf(" ")).matches(TIME_INFO_PATTERN)) {
+		if (tafAsString.toString().matches(TIME_INFO_PATTERN)) {
 			timeInfo.setDayOfMonth(Integer.parseInt(tafAsString.substring(0,2)));
 			timeInfo.setHour(Integer.parseInt(tafAsString.substring(2,4)));
 			timeInfo.setMinute(Integer.parseInt(tafAsString.substring(4,6)));

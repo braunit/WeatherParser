@@ -27,13 +27,13 @@ import ca.braunit.weatherparser.util.WeatherParserConstants;
 
 public class TemperatureAndDewPointDecoder {
 
-	private static final String TEMPERATURE_AND_DEW_POINT_PATTERN = "(M)?(\\d){2}/(M)?(\\d){2}";
+	private static final String TEMPERATURE_AND_DEW_POINT_PATTERN = "(M)?(\\d){2}/(M)?(\\d){2}( |\\Z)(.)*";
 
 	public static TemperatureAndDewPoint decodeObject(StringBuffer metarAsString) {
 
 		TemperatureAndDewPoint tad = null;
 		
-		if (metarAsString.substring(0, metarAsString.indexOf(" ")).toString().matches(TEMPERATURE_AND_DEW_POINT_PATTERN)) {
+		if (metarAsString.toString().matches(TEMPERATURE_AND_DEW_POINT_PATTERN)) {
 			tad = new TemperatureAndDewPoint();
 			int multiplier = 1;
 			if (metarAsString.toString().startsWith(WeatherParserConstants.NEGATIVE_VALUE_CODE)) {
@@ -50,7 +50,7 @@ public class TemperatureAndDewPointDecoder {
 			}
 			tad.setDewPoint(Integer.parseInt(metarAsString.substring(0, 2)) * multiplier);
 			
-			metarAsString.delete(0, metarAsString.indexOf(" ") + 1);
+			CommonDecoder.deleteParsedContent(metarAsString);
 			
 		}
 		return tad;

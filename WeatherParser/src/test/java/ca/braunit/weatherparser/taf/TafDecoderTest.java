@@ -51,7 +51,7 @@ public class TafDecoderTest {
 	 */
 	public void testAirportIcaoCode() throws DecoderException {
 		Taf taf = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
-		assertEquals("KSEA", taf.getAirportIcaoCode());
+		assertEquals("CYVR", taf.getAirportIcaoCode());
 	}
 
 	@Test

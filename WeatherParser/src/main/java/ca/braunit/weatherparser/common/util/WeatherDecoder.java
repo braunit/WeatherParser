@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import ca.braunit.weatherparser.common.domain.Weather;
+import ca.braunit.weatherparser.metar.util.CommonDecoder;
 
 public class WeatherDecoder {
 
@@ -100,7 +101,7 @@ public class WeatherDecoder {
 
 			Weather weather = new Weather();
 			
-			StringBuffer weatherInfo = new StringBuffer(metarAsString.substring(0,metarAsString.indexOf(" ")));
+			StringBuffer weatherInfo = new StringBuffer(CommonDecoder.getContentToParse(metarAsString));
 
 			if (weatherInfo.toString().startsWith("RE")) {
 				weatherInfo.delete(0, 2);
@@ -155,7 +156,7 @@ public class WeatherDecoder {
 			}
 			
 			if (foundRequiredWeatherInfo) {
-				metarAsString.delete(0, metarAsString.indexOf(" ") + 1);		
+				CommonDecoder.deleteParsedContent(metarAsString);		
 				weatherList.add(weather);
 			} else {
 				break;
