@@ -22,6 +22,18 @@
  */
 package ca.braunit.weatherparser.common.domain;
 
+/**
+ * This class represents the detailed weather information described by
+ * the following criteria: <br>
+ * - intensity, <br>
+ * - proximity, <br>
+ * - descriptor, <br>
+ * - precipitation, <br>
+ * - obscuration and <br>
+ * - other
+ * @author Alexander Braun
+ *
+ */
 public class Weather {
 
 	private String intensityCode;
@@ -37,6 +49,10 @@ public class Weather {
 	private String other;
 	//Combination if precipitation, obscuration and other
 	private String weatherPhenomena;
+	
+	private boolean onStation;
+	private boolean inTheVicinity;
+	private boolean inTheDistant;
 
 	public String getIntensityCode() {
 		return intensityCode;
@@ -103,6 +119,24 @@ public class Weather {
 	}
 	public void setWeatherPhenomena(String weatherPhenomena) {
 		this.weatherPhenomena = weatherPhenomena;
+	}
+	public boolean isOnStation() {
+		return onStation;
+	}
+	public void setOnStation(boolean onStation) {
+		this.onStation = onStation;
+	}
+	public boolean isInTheVicinity() {
+		return inTheVicinity;
+	}
+	public void setInTheVicinity(boolean inTheVicinity) {
+		this.inTheVicinity = inTheVicinity;
+	}
+	public boolean isInTheDistant() {
+		return inTheDistant;
+	}
+	public void setInTheDistant(boolean inTheDistant) {
+		this.inTheDistant = inTheDistant;
 	}
 
 }

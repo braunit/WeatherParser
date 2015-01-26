@@ -61,7 +61,13 @@ public class VisibilityDecoder {
 			metarAsString.delete(0, visibilityString.length()+3);
 			visibility.setVisibilityUnitOfMeasure(WeatherParserConstants.UNIT_OF_MEASURE_STATUTE_MILES);
 		} else if (metarAsString.toString().matches(STANDARD_VISIBILITY_PATTERN)) {
-			visibility.setVisibility(new BigDecimal(metarAsString.substring(0, 4)));
+			
+			if (metarAsString.substring(0,4).equals("9999")) {
+				visibility.setVisibility(BigDecimal.TEN);
+				visibility.setGreaterThan(true);
+			} else {
+				visibility.setVisibility(new BigDecimal(metarAsString.substring(0, 4)));				
+			}
 			metarAsString.delete(0, 4);
 			if (metarAsString.substring(0, 3).equals(NDV_STRING)) {
 				visibility.setNdv(true);

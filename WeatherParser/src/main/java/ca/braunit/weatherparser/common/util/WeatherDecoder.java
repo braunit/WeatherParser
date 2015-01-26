@@ -31,7 +31,7 @@ import ca.braunit.weatherparser.common.domain.Weather;
 
 public class WeatherDecoder {
 
-	private static final String WEATHER_PATTERN = "(RE)?(\\+|\\-|VC)?(([a-zA-Z]){2})+( |\\Z)(.)*";
+	private static final String WEATHER_PATTERN = "(RE)?(\\+|\\-|)?(VC|DSNT)?(([a-zA-Z]){2})+( |\\Z)(.)*";
 	
 	private static final String INTENSITY_PATTERN = "^(\\+|\\-|VC).*";
 	
@@ -44,7 +44,6 @@ public class WeatherDecoder {
 	static {
 		INTENSITY_MAP.put("-", "Light");
 		INTENSITY_MAP.put("+", "Heavy");
-		INTENSITY_MAP.put("VC", "In the vicinity");
 		INTENSITY_MAP.put("DEFAULT", "Moderate");
 	}
 	
@@ -121,6 +120,14 @@ public class WeatherDecoder {
 				weather.setIntensity(INTENSITY_MAP.get("DEFAULT"));
 			}
 			
+			if(weatherInfo.toString().startsWith("VC")) {
+				weather.setInTheVicinity(true);
+			} else if (weatherInfo.toString().startsWith("DSNT")) {
+				weather.setInTheDistant(true);
+			} else {
+				weather.setOnStation(true);
+			}
+				
 			while (weatherInfo.length() >= 2) {
 				String checkString = weatherInfo.substring(0,2);
 				if (null != DESCRIPTOR_MAP.get(checkString)) {
