@@ -105,7 +105,7 @@ public class VisibilityDecoderTest {
 		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_6);
 		
 		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_METER, mdResult.getMetar().getVisibility().get(0).getVisibilityUnitOfMeasure());
-		assertEquals(BigDecimal.TEN, mdResult.getMetar().getVisibility().get(0).getVisibility());
+		assertEquals(new BigDecimal("10000"), mdResult.getMetar().getVisibility().get(0).getVisibility());
 		assertTrue(mdResult.getMetar().getVisibility().get(0).isGreaterThan());
 		
 		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_METER, mdResult.getMetar().getVisibility().get(1).getVisibilityUnitOfMeasure());

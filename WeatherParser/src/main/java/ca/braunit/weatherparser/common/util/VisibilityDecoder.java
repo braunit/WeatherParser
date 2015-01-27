@@ -71,7 +71,7 @@ public class VisibilityDecoder {
 			} else if (metarAsString.toString().matches(STANDARD_VISIBILITY_PATTERN)) {
 				visibility = new Visibility();
 				if (metarAsString.substring(0,4).equals("9999")) {
-					visibility.setVisibility(BigDecimal.TEN);
+					visibility.setVisibility(new BigDecimal("10000"));
 					visibility.setGreaterThan(true);
 				} else {
 					visibility.setVisibility(new BigDecimal(metarAsString.substring(0, 4)));				
