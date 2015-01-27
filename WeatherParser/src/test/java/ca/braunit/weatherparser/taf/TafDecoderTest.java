@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import ca.braunit.weatherparser.exception.DecoderException;
-import ca.braunit.weatherparser.taf.domain.Taf;
 
 public class TafDecoderTest {
 
@@ -39,8 +38,8 @@ public class TafDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testUpdateOverPreviousReport() throws DecoderException {
-		Taf taf = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
-		assertTrue(taf.isUpdateOverPreviousReport());
+		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
+		assertTrue(tdResult.getTaf().isUpdateOverPreviousReport());
 	}
 
 	@Test
@@ -50,8 +49,8 @@ public class TafDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testAirportIcaoCode() throws DecoderException {
-		Taf taf = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
-		assertEquals("CYVR", taf.getAirportIcaoCode());
+		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
+		assertEquals("CYVR", tdResult.getTaf().getAirportIcaoCode());
 	}
 
 	@Test
@@ -61,10 +60,10 @@ public class TafDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testIssuanceTime() throws DecoderException {
-		Taf taf = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
-		assertEquals(20, taf.getIssuanceTime().getDayOfMonth().intValue());
-		assertEquals(21, taf.getIssuanceTime().getHour().intValue());
-		assertEquals(00, taf.getIssuanceTime().getMinute().intValue());
+		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
+		assertEquals(20, tdResult.getTaf().getIssuanceTime().getDayOfMonth().intValue());
+		assertEquals(21, tdResult.getTaf().getIssuanceTime().getHour().intValue());
+		assertEquals(00, tdResult.getTaf().getIssuanceTime().getMinute().intValue());
 	}
 
 }

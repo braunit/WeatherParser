@@ -32,7 +32,7 @@ import org.junit.Test;
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.taf.ExampleMessagesTaf;
 import ca.braunit.weatherparser.taf.TafDecoder;
-import ca.braunit.weatherparser.taf.domain.Taf;
+import ca.braunit.weatherparser.taf.TafDecoderResult;
 import ca.braunit.weatherparser.taf.domain.ExpectedChange.ChangeType;
 import ca.braunit.weatherparser.util.WeatherParserConstants;
 
@@ -45,28 +45,28 @@ public class ExpectedChangeDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testExpectedChange() throws DecoderException {
-		Taf taf = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
+		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
 		
-		assertEquals(ChangeType.FROM, taf.getExpectedChanges().get(1).getChangeType());
-		assertEquals(new BigDecimal("1.5"), taf.getExpectedChanges().get(1).getVisibility().getVisibility());
-		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_STATUTE_MILES, taf.getExpectedChanges().get(1).getVisibility().getVisibilityUnitOfMeasure());
-		assertTrue(taf.getExpectedChanges().get(1).getWindShear().isPotentialWindShear());
-		assertEquals(2, taf.getExpectedChanges().get(1).getIcingConditions().getIcingIntensityCode().intValue());
-		assertEquals(3000, taf.getExpectedChanges().get(1).getIcingConditions().getIcingLayerBase().intValue());
-		assertEquals(4000, taf.getExpectedChanges().get(1).getIcingConditions().getIcingLayerDepth().intValue());
-		assertEquals(2, taf.getExpectedChanges().get(1).getTurbulence().getTurbulenceIntensityCode().intValue());
-		assertEquals(2000, taf.getExpectedChanges().get(1).getTurbulence().getTurbulenceLayerBase().intValue());
-		assertEquals(4000, taf.getExpectedChanges().get(1).getTurbulence().getTurbulenceLayerDepth().intValue());
+		assertEquals(ChangeType.FROM, tdResult.getTaf().getExpectedChanges().get(1).getChangeType());
+		assertEquals(new BigDecimal("1.5"), tdResult.getTaf().getExpectedChanges().get(1).getVisibility().get(0).getVisibility());
+		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_STATUTE_MILES, tdResult.getTaf().getExpectedChanges().get(1).getVisibility().get(0).getVisibilityUnitOfMeasure());
+		assertTrue(tdResult.getTaf().getExpectedChanges().get(1).getWindShear().isPotentialWindShear());
+		assertEquals(2, tdResult.getTaf().getExpectedChanges().get(1).getIcingConditions().getIcingIntensityCode().intValue());
+		assertEquals(3000, tdResult.getTaf().getExpectedChanges().get(1).getIcingConditions().getIcingLayerBase().intValue());
+		assertEquals(4000, tdResult.getTaf().getExpectedChanges().get(1).getIcingConditions().getIcingLayerDepth().intValue());
+		assertEquals(2, tdResult.getTaf().getExpectedChanges().get(1).getTurbulence().getTurbulenceIntensityCode().intValue());
+		assertEquals(2000, tdResult.getTaf().getExpectedChanges().get(1).getTurbulence().getTurbulenceLayerBase().intValue());
+		assertEquals(4000, tdResult.getTaf().getExpectedChanges().get(1).getTurbulence().getTurbulenceLayerDepth().intValue());
 		
-		assertEquals(999, taf.getExpectedChanges().get(1).getMinimumAltimeterSettings().getPressure().intValue());
+		assertEquals(999, tdResult.getTaf().getExpectedChanges().get(1).getMinimumAltimeterSettings().getPressure().intValue());
 
-		assertEquals(10, taf.getExpectedChanges().get(1).getMaximumTemperature().getTemperature().intValue());
-		assertEquals(21, taf.getExpectedChanges().get(1).getMaximumTemperature().getTime().getDayOfMonth().intValue());
-		assertEquals(4, taf.getExpectedChanges().get(1).getMaximumTemperature().getTime().getHour().intValue());
+		assertEquals(10, tdResult.getTaf().getExpectedChanges().get(1).getMaximumTemperature().getTemperature().intValue());
+		assertEquals(21, tdResult.getTaf().getExpectedChanges().get(1).getMaximumTemperature().getTime().getDayOfMonth().intValue());
+		assertEquals(4, tdResult.getTaf().getExpectedChanges().get(1).getMaximumTemperature().getTime().getHour().intValue());
 
-		assertEquals(-5, taf.getExpectedChanges().get(1).getMinimumTemperature().getTemperature().intValue());
-		assertEquals(21, taf.getExpectedChanges().get(1).getMinimumTemperature().getTime().getDayOfMonth().intValue());
-		assertEquals(6, taf.getExpectedChanges().get(1).getMinimumTemperature().getTime().getHour().intValue());
+		assertEquals(-5, tdResult.getTaf().getExpectedChanges().get(1).getMinimumTemperature().getTemperature().intValue());
+		assertEquals(21, tdResult.getTaf().getExpectedChanges().get(1).getMinimumTemperature().getTime().getDayOfMonth().intValue());
+		assertEquals(6, tdResult.getTaf().getExpectedChanges().get(1).getMinimumTemperature().getTime().getHour().intValue());
 		
 	}
 
@@ -78,11 +78,14 @@ public class ExpectedChangeDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testEmptyProbability() throws DecoderException {
-		Taf taf = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_2);
+		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_2);
 		
-		assertEquals(ChangeType.PROBABILITY, taf.getExpectedChanges().get(0).getChangeType());
+		assertEquals(ChangeType.PROBABILITY, tdResult.getTaf().getExpectedChanges().get(0).getChangeType());
 
-		assertEquals(ChangeType.TEMPORARY, taf.getExpectedChanges().get(1).getChangeType());
+		assertEquals(ChangeType.TEMPORARY, tdResult.getTaf().getExpectedChanges().get(1).getChangeType());
+		
+		assertEquals("AAAA", tdResult.getUnparsedTokens().get(0));
+		assertEquals("BBBB", tdResult.getUnparsedTokens().get(1));
 		
 	}
 

@@ -29,7 +29,7 @@ import org.junit.Test;
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.metar.ExampleMessagesMetar;
 import ca.braunit.weatherparser.metar.MetarDecoder;
-import ca.braunit.weatherparser.metar.domain.Metar;
+import ca.braunit.weatherparser.metar.MetarDecoderResult;
 
 public class TemperatureAndDewPointDecoderTest {
 
@@ -39,10 +39,10 @@ public class TemperatureAndDewPointDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testTemperatureAndDewPoint() throws DecoderException {
-		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
+		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
 		
-		assertEquals(10, metar.getTemperatureAndDewPoint().getTemperature().intValue());
-		assertEquals(9, metar.getTemperatureAndDewPoint().getDewPoint().intValue());
+		assertEquals(10, mdResult.getMetar().getTemperatureAndDewPoint().getTemperature().intValue());
+		assertEquals(9, mdResult.getMetar().getTemperatureAndDewPoint().getDewPoint().intValue());
 		
 	}
 

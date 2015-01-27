@@ -29,7 +29,7 @@ import org.junit.Test;
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.metar.ExampleMessagesMetar;
 import ca.braunit.weatherparser.metar.MetarDecoder;
-import ca.braunit.weatherparser.metar.domain.Metar;
+import ca.braunit.weatherparser.metar.MetarDecoderResult;
 
 public class WindShearDecoderTest {
 
@@ -39,9 +39,9 @@ public class WindShearDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testWindShear() throws DecoderException {
-		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
+		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
 		
-		assertEquals("11L", metar.getWindShear().get(0).getRunwayIdentifier());
+		assertEquals("11L", mdResult.getMetar().getWindShear().get(0).getRunwayIdentifier());
 		
 	}
 

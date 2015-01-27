@@ -29,7 +29,7 @@ import org.junit.Test;
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.metar.ExampleMessagesMetar;
 import ca.braunit.weatherparser.metar.MetarDecoder;
-import ca.braunit.weatherparser.metar.domain.Metar;
+import ca.braunit.weatherparser.metar.MetarDecoderResult;
 import ca.braunit.weatherparser.util.WeatherParserConstants;
 
 public class RunwayVisualRangeDecoderTest {
@@ -40,10 +40,10 @@ public class RunwayVisualRangeDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testRunwayVisualRangeMeter() throws DecoderException {
-		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_3);
-		assertEquals("20", metar.getRunwayVisualRanges().get(0).getRunway());
-		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_METER, metar.getRunwayVisualRanges().get(0).getUnitOfMeasure());
-		assertEquals(900, metar.getRunwayVisualRanges().get(0).getVisibileRange().intValue());
+		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_3);
+		assertEquals("20", mdResult.getMetar().getRunwayVisualRanges().get(0).getRunway());
+		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_METER, mdResult.getMetar().getRunwayVisualRanges().get(0).getUnitOfMeasure());
+		assertEquals(900, mdResult.getMetar().getRunwayVisualRanges().get(0).getVisibileRange().intValue());
 	}
 	
 	@Test
@@ -52,10 +52,10 @@ public class RunwayVisualRangeDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testRunwayVisualRangeFeet() throws DecoderException {
-		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
-		assertEquals("01L", metar.getRunwayVisualRanges().get(0).getRunway());
-		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_FEET, metar.getRunwayVisualRanges().get(0).getUnitOfMeasure());
-		assertEquals(800, metar.getRunwayVisualRanges().get(0).getVisibileRange().intValue());
+		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
+		assertEquals("01L", mdResult.getMetar().getRunwayVisualRanges().get(0).getRunway());
+		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_FEET, mdResult.getMetar().getRunwayVisualRanges().get(0).getUnitOfMeasure());
+		assertEquals(800, mdResult.getMetar().getRunwayVisualRanges().get(0).getVisibileRange().intValue());
 	}
 
 	@Test
@@ -64,11 +64,11 @@ public class RunwayVisualRangeDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testRunwayVisualRangeFeetWithVariety() throws DecoderException {
-		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_2);
-		assertEquals("01L", metar.getRunwayVisualRanges().get(0).getRunway());
-		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_FEET, metar.getRunwayVisualRanges().get(0).getUnitOfMeasure());
-		assertEquals(800, metar.getRunwayVisualRanges().get(0).getVisibileRange().intValue());
-		assertEquals(1600, metar.getRunwayVisualRanges().get(0).getVisibileRangeVariety().intValue());
+		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_2);
+		assertEquals("01L", mdResult.getMetar().getRunwayVisualRanges().get(0).getRunway());
+		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_FEET, mdResult.getMetar().getRunwayVisualRanges().get(0).getUnitOfMeasure());
+		assertEquals(800, mdResult.getMetar().getRunwayVisualRanges().get(0).getVisibileRange().intValue());
+		assertEquals(1600, mdResult.getMetar().getRunwayVisualRanges().get(0).getVisibileRangeVariety().intValue());
 	}
 
 	

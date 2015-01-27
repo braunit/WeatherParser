@@ -20,27 +20,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.taf;
 
-import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.Test;
+import ca.braunit.weatherparser.taf.domain.Taf;
 
-import ca.braunit.weatherparser.exception.DecoderException;
+public class TafDecoderResult {
 
-public class CloudsDecoderTest {
+	private Taf taf;
+	private List<String> unparsedTokens;
 
-	@Test
-	/**
-	 * Check Common Decoder (Remove Whitespaces)
-	 * @throws DecoderException
-	 */
-	public void testRemoveWhitespaces() throws DecoderException {
-
-		
-		String resultString = CommonDecoder.prepareWeatherString(" ABC  DEF GHI J ");
-		assertEquals("ABC DEF GHI J", resultString);
-		
+	public Taf getTaf() {
+		return taf;
+	}
+	public void setTaf(Taf taf) {
+		this.taf = taf;
 	}
 
+	public List<String> getUnparsedTokens() {
+		return unparsedTokens;
+	}
+	
+	public void addUnparsedToken(String token) {
+		if (null == unparsedTokens) {
+			unparsedTokens = new ArrayList<String>();
+		}
+		unparsedTokens.add(token);
+	}
+
+	
 }

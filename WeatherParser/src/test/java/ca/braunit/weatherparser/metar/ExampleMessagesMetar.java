@@ -38,13 +38,13 @@ public final class ExampleMessagesMetar {
 	 * Visibility in Meters <br>
 	 * Runway Visual Range with Variety in Feet
 	 */
-	public static final String METAR_EXAMPLE_2 = "CYVR 030100Z 08006KT 2000 R01L/0800V1600FT -RA SCT009 BKN021 OVC050 10/09 A3007 RESHRA WS RWY11L WS RWY11R RMK SF3SC3SC2 SLP181";
+	public static final String METAR_EXAMPLE_2 = "CYVR 030100Z 08006G10KT 2000 R01L/0800V1600FT -RA SCT009 BKN021 OVC050 10/09 A3007 RESHRA WS RWY11L WS RWY11R RMK SF3SC3SC2 SLP181";
 	
 	/**
 	 * CAVOK <br>
 	 * Runway Visual Range in meter
 	 */
-	public static final String METAR_EXAMPLE_3 = "CYVR 250600Z 02013KT CAVOK R20/0900 07/04 Q1020";
+	public static final String METAR_EXAMPLE_3 = "CYVR 250600Z VRB02KT CAVOK R20/0900 07/04 Q1020";
 
 	/**
 	 * Fraction Statute Miles
@@ -59,6 +59,15 @@ public final class ExampleMessagesMetar {
 	/**
 	 * Visibility in Meters with direction
 	 */
-	public static final String METAR_EXAMPLE_6 = "CYVR 030100Z 08006KT 2000NE -RA SCT009 BKN021 OVC050 10/09 A3007 RESHRA WS RWY11L WS RWY11R RMK SF3SC3SC2 SLP181";
+	public static final String METAR_EXAMPLE_6 = "CYVR 030100Z 08006KT 9999 4000N -RA SCT009 BKN021 OVC050 10/09 A3007 RESHRA WS RWY11L WS RWY11R RMK SF3SC3SC2 SLP181";
+
+	/**
+	 * Visibility in Meters, two values
+	 */
+	public static final String METAR_EXAMPLE_7 = "CYVR 280700Z 14018KT 9000 2000N -DZ FEW004 SCT006 BKN008 12/12 Q1000";
 	
+	/**
+	 * Short Message
+	 */
+	public static final String METAR_EXAMPLE_8 = "CYVR 310300Z 11035G51KT 3500";
 }

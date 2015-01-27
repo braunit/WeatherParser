@@ -29,7 +29,7 @@ import org.junit.Test;
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.taf.ExampleMessagesTaf;
 import ca.braunit.weatherparser.taf.TafDecoder;
-import ca.braunit.weatherparser.taf.domain.Taf;
+import ca.braunit.weatherparser.taf.TafDecoderResult;
 
 public class CloudsDecoderTest {
 
@@ -40,13 +40,13 @@ public class CloudsDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testClouds() throws DecoderException {
-		Taf taf = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
-		assertEquals("FEW", taf.getClouds().get(0).getCloudAmountCode());
-		assertEquals("Few", taf.getClouds().get(0).getCloudAmount());
-		assertEquals(700, taf.getClouds().get(0).getCloudHeight().intValue());
-		assertEquals("SCT", taf.getClouds().get(1).getCloudAmountCode());
-		assertEquals("Scattered", taf.getClouds().get(1).getCloudAmount());
-		assertEquals(25000, taf.getClouds().get(1).getCloudHeight().intValue());
+		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
+		assertEquals("FEW", tdResult.getTaf().getClouds().get(0).getCloudAmountCode());
+		assertEquals("Few", tdResult.getTaf().getClouds().get(0).getCloudAmount());
+		assertEquals(700, tdResult.getTaf().getClouds().get(0).getCloudHeight().intValue());
+		assertEquals("SCT", tdResult.getTaf().getClouds().get(1).getCloudAmountCode());
+		assertEquals("Scattered", tdResult.getTaf().getClouds().get(1).getCloudAmount());
+		assertEquals(25000, tdResult.getTaf().getClouds().get(1).getCloudHeight().intValue());
 	}
 
 }

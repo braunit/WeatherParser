@@ -27,35 +27,19 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import ca.braunit.weatherparser.exception.DecoderException;
-import ca.braunit.weatherparser.metar.ExampleMessagesMetar;
-import ca.braunit.weatherparser.metar.MetarDecoder;
-import ca.braunit.weatherparser.metar.MetarDecoderResult;
 
-public class WeatherDecoderTest {
+public class CommonDecoderTest {
 
 	@Test
 	/**
-	 * Check Weather Decoding (Light Rain)
+	 * Check Common Decoder (Remove Whitespaces)
 	 * @throws DecoderException
 	 */
-	public void testPresentWeatherLightRain() throws DecoderException {
-		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
-		
-		assertEquals("Light", mdResult.getMetar().getPresentWeather().get(0).getIntensity());
-		assertEquals("Rain", mdResult.getMetar().getPresentWeather().get(0).getPrecipitation());
-		
-	}
+	public void testRemoveWhitespaces() throws DecoderException {
 
-	@Test
-	/**
-	 * Check Weather Decoding (Light Rain)
-	 * @throws DecoderException
-	 */
-	public void testRecentWeatherShowerRain() throws DecoderException {
-		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
 		
-		assertEquals("Showers", mdResult.getMetar().getRecentWeather().get(0).getDescriptor());
-		assertEquals("Rain", mdResult.getMetar().getRecentWeather().get(0).getPrecipitation());
+		String resultString = CommonDecoder.prepareWeatherString(" ABC  DEF GHI J ");
+		assertEquals("ABC DEF GHI J", resultString);
 		
 	}
 

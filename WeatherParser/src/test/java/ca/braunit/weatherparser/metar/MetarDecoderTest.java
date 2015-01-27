@@ -27,7 +27,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import ca.braunit.weatherparser.exception.DecoderException;
-import ca.braunit.weatherparser.metar.domain.Metar;
 
 /**
  * Unit test simple MetarDecoder.
@@ -42,8 +41,8 @@ public class MetarDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testAirportIcaoCode() throws DecoderException {
-		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
-		assertEquals("CYVR", metar.getAirportIcaoCode());
+		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
+		assertEquals("CYVR", mdResult.getMetar().getAirportIcaoCode());
 	}
 	
 	@Test(expected=DecoderException.class)
@@ -62,10 +61,10 @@ public class MetarDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testReportTime() throws DecoderException {
-		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
-		assertEquals(3, metar.getReportTime().getDayOfMonth().intValue());
-		assertEquals(1, metar.getReportTime().getHour().intValue());
-		assertEquals(0, metar.getReportTime().getMinute().intValue());
+		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
+		assertEquals(3, mdResult.getMetar().getReportTime().getDayOfMonth().intValue());
+		assertEquals(1, mdResult.getMetar().getReportTime().getHour().intValue());
+		assertEquals(0, mdResult.getMetar().getReportTime().getMinute().intValue());
 	}
 	
 }

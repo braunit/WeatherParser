@@ -22,11 +22,52 @@
  */
 package ca.braunit.weatherparser.metar.util;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import ca.braunit.weatherparser.exception.DecoderException;
+import ca.braunit.weatherparser.metar.ExampleMessagesMetar;
+import ca.braunit.weatherparser.metar.MetarDecoder;
+import ca.braunit.weatherparser.metar.MetarDecoderResult;
+import ca.braunit.weatherparser.util.WeatherParserConstants;
+
 /**
  * Unit Test for Wind Decoder
  * @author abraun
  *
  */
 public class WindDecoderTest {
+
+	@Test
+	/**
+	 * Check Wind Decoder (with Gusts)
+	 * @throws DecoderException
+	 */
+	public void testWindWithGusts() throws DecoderException {
+
+		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_2);
+		
+		assertEquals(80, mdResult.getMetar().getWind().getWindDirection().intValue());
+		assertEquals(6, mdResult.getMetar().getWind().getWindSpeed().intValue());
+		assertEquals(10, mdResult.getMetar().getWind().getWindSpeedGusts().intValue());
+		
+	}
+
+	@Test
+	/**
+	 * Check Wind Decoder (with Gusts)
+	 * @throws DecoderException
+	 */
+	public void testLightVariableWind() throws DecoderException {
+
+		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_3);
+		
+		assertTrue(mdResult.getMetar().getWind().isVariableWind());
+		assertEquals(2, mdResult.getMetar().getWind().getWindSpeed().intValue());
+		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_KNOTS, mdResult.getMetar().getWind().getSpeedUnitOfMeasure());
+		
+	}
 
 }

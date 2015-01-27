@@ -20,27 +20,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.metar.util;
+package ca.braunit.weatherparser.metar;
 
-import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.Test;
+import ca.braunit.weatherparser.metar.domain.Metar;
 
-import ca.braunit.weatherparser.exception.DecoderException;
+public class MetarDecoderResult {
 
-public class CloudsDecoderTest {
-
-	@Test
-	/**
-	 * Check Common Decoder (Remove Whitespaces)
-	 * @throws DecoderException
-	 */
-	public void testRemoveWhitespaces() throws DecoderException {
-
-		
-		String resultString = CommonDecoder.prepareWeatherString(" ABC  DEF GHI J ");
-		assertEquals("ABC DEF GHI J", resultString);
-		
+	private Metar metar;
+	private List<String> unparsedTokens;
+	
+	public Metar getMetar() {
+		return metar;
 	}
-
+	
+	public void setMetar(Metar metar) {
+		this.metar = metar;
+	}
+	
+	public List<String> getUnparsedTokens() {
+		return unparsedTokens;
+	}
+	
+	public void addUnparsedToken(String token) {
+		if (null == unparsedTokens) {
+			unparsedTokens = new ArrayList<String>();
+		}
+		unparsedTokens.add(token);
+	}
+	
 }

@@ -40,7 +40,7 @@ public class Metar {
 
 	private TimeInfo reportTime;
 	private Wind wind;
-	private Visibility visibility;
+	private List<Visibility> visibility;
 	private List<RunwayVisualRange> runwayVisualRanges;
 	private List<Weather> presentWeather;
 	private List<Weather> recentWeather;
@@ -49,8 +49,6 @@ public class Metar {
 	private Pressure pressure;
 	private List<WindShear> windShear;
 	private Remarks remarks;
-
-	private String unparsedContent;
 	
 	public String getAirportIcaoCode() {
 		return airportIcaoCode;
@@ -108,11 +106,11 @@ public class Metar {
 		this.wind = wind;
 	}
 
-	public Visibility getVisibility() {
+	public List<Visibility> getVisibility() {
 		return visibility;
 	}
 
-	public void setVisibility(Visibility visibility) {
+	public void setVisibility(List<Visibility> visibility) {
 		this.visibility = visibility;
 	}
 
@@ -178,14 +176,6 @@ public class Metar {
 
 	public void setRemarks(Remarks remarks) {
 		this.remarks = remarks;
-	}
-
-	public String getUnparsedContent() {
-		return unparsedContent;
-	}
-
-	public void setUnparsedContent(String unparsedContent) {
-		this.unparsedContent = unparsedContent;
 	}
 
 }

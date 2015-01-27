@@ -30,6 +30,7 @@ public class Wind {
 	private Integer variableWindDirectionFrom;
 	private Integer variableWindDirectionTo;
 	private String speedUnitOfMeasure;
+	private boolean variableWind = false;
 
 	public Integer getWindDirection() {
 		return windDirection;
@@ -66,6 +67,12 @@ public class Wind {
 	}
 	public void setSpeedUnitOfMeasure(String speedUnitOfMeasure) {
 		this.speedUnitOfMeasure = speedUnitOfMeasure;
+	}
+	public boolean isVariableWind() {
+		return variableWind;
+	}
+	public void setVariableWind(boolean variableWind) {
+		this.variableWind = variableWind;
 	}
 
 	

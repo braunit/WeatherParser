@@ -42,7 +42,7 @@ public class ExpectedChange {
 	private Integer probabilityOfChange;
 	
 	private Wind wind;
-	private Visibility visibility;
+	private List<Visibility> visibility;
 	private List<Clouds> clouds;
 	private List<Weather> forecastWeather;
 	private WindShear windShear;
@@ -71,10 +71,10 @@ public class ExpectedChange {
 	public void setWind(Wind wind) {
 		this.wind = wind;
 	}
-	public Visibility getVisibility() {
+	public List<Visibility> getVisibility() {
 		return visibility;
 	}
-	public void setVisibility(Visibility visibility) {
+	public void setVisibility(List<Visibility> visibility) {
 		this.visibility = visibility;
 	}
 	public List<Clouds> getClouds() {

@@ -29,7 +29,7 @@ import org.junit.Test;
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.taf.ExampleMessagesTaf;
 import ca.braunit.weatherparser.taf.TafDecoder;
-import ca.braunit.weatherparser.taf.domain.Taf;
+import ca.braunit.weatherparser.taf.TafDecoderResult;
 
 public class WindDecoderTest {
 	
@@ -40,10 +40,10 @@ public class WindDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testValidityPeriod() throws DecoderException {
-		Taf taf = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
-		assertEquals("KT", taf.getWind().getSpeedUnitOfMeasure());
-		assertEquals(350, taf.getWind().getWindDirection().intValue());
-		assertEquals(5, taf.getWind().getWindSpeed().intValue());
+		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
+		assertEquals("KT", tdResult.getTaf().getWind().getSpeedUnitOfMeasure());
+		assertEquals(350, tdResult.getTaf().getWind().getWindDirection().intValue());
+		assertEquals(5, tdResult.getTaf().getWind().getWindSpeed().intValue());
 	}
 
 }

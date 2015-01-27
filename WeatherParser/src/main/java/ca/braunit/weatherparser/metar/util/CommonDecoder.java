@@ -43,4 +43,7 @@ public class CommonDecoder {
 		}
 	}
 	
+	public static String prepareWeatherString(String sourceWeatherString) {
+		return sourceWeatherString.replaceAll("(\\s)++", " ").trim();
+	}
 }

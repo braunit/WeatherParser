@@ -57,11 +57,14 @@ public class MetarDecoder {
 	 * @return a {@link Metar} object 
 	 * @throws DecoderException in case of missing or unknown patterns.
 	 */
-	public static Metar decodeMetar(String weatherString) throws DecoderException {
-		return decodeObject(new StringBuffer(weatherString.trim()));
+	public static MetarDecoderResult decodeMetar(String weatherString) throws DecoderException {
+		return decodeObject(new StringBuffer(CommonDecoder.prepareWeatherString(weatherString)));
 	}
 
-	private static Metar decodeObject(StringBuffer weatherSb) throws DecoderException {
+	private static MetarDecoderResult decodeObject(StringBuffer weatherSb) throws DecoderException {
+
+		MetarDecoderResult mdResult = new MetarDecoderResult();
+		
 		Metar metar = new Metar();
 		deodeReportType(metar, weatherSb);
 		decodeAirportIcaoCode(metar, weatherSb);
@@ -69,33 +72,44 @@ public class MetarDecoder {
 		metar.setReportTime(TimeInfoDecoder.decodeObject(weatherSb, true));
 		
 		decodeAutomatedObservation(metar, weatherSb);
-		
-		metar.setWind(WindDecoder.decodeObject(weatherSb));
-		metar.setVisibility(VisibilityDecoder.decodeObject(weatherSb));
-		metar.setRunwayVisualRanges(RunwayVisualRangeDecoder.decodeObject(weatherSb));
-		
-		metar.setPresentWeather(WeatherDecoder.decodeObject(weatherSb));
-		
-		metar.setClouds(CloudsDecoder.decodeObject(weatherSb));
-		
-		metar.setTemperatureAndDewPoint(TemperatureAndDewPointDecoder.decodeObject(weatherSb));
-		
-		metar.setPressure(PressureDecoder.decodeObject(weatherSb));
-		
-		metar.setRecentWeather(WeatherDecoder.decodeObject(weatherSb));
-		
-		metar.setWindShear(WindShearDecoder.decodeObject(weatherSb));
-		
-		metar.setRemarks(RemarksDecoder.decodeObject(weatherSb));
-		
-		if (weatherSb.length() > 0) {
-			metar.setUnparsedContent(weatherSb.toString());
+				
+		while(weatherSb.length() > 0) {
+			metar.setWind(WindDecoder.decodeObject(weatherSb));
+			metar.setVisibility(VisibilityDecoder.decodeObject(weatherSb));
+			metar.setRunwayVisualRanges(RunwayVisualRangeDecoder.decodeObject(weatherSb));
+			
+			metar.setPresentWeather(WeatherDecoder.decodeObject(weatherSb));
+			
+			metar.setClouds(CloudsDecoder.decodeObject(weatherSb));
+			
+			metar.setTemperatureAndDewPoint(TemperatureAndDewPointDecoder.decodeObject(weatherSb));
+			
+			metar.setPressure(PressureDecoder.decodeObject(weatherSb));
+			
+			metar.setRecentWeather(WeatherDecoder.decodeObject(weatherSb));
+			
+			metar.setWindShear(WindShearDecoder.decodeObject(weatherSb));
+			
+			metar.setRemarks(RemarksDecoder.decodeObject(weatherSb));
+
+			if (weatherSb.length() > 0) {
+				mdResult.addUnparsedToken(CommonDecoder.getContentToParse(weatherSb));
+				CommonDecoder.deleteParsedContent(weatherSb);
+			}
+
 		}
 		
-		return metar;
+		mdResult.setMetar(metar);
+		
+		return mdResult;
 	}
 	
 	private static void deodeReportType(Metar metar, StringBuffer weatherSb) {
+		if (weatherSb.toString().startsWith(CORRECTED)) {
+			metar.setCorrectedReport(true);
+			CommonDecoder.deleteParsedContent(weatherSb);
+		}
+		
 		if (weatherSb.substring(0, METAR.length()).equals(METAR)) {
 			metar.setMetarType(true);
 			weatherSb.delete(0, METAR.length()+1);

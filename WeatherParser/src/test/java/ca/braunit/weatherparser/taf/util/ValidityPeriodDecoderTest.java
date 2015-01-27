@@ -29,7 +29,7 @@ import org.junit.Test;
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.taf.ExampleMessagesTaf;
 import ca.braunit.weatherparser.taf.TafDecoder;
-import ca.braunit.weatherparser.taf.domain.Taf;
+import ca.braunit.weatherparser.taf.TafDecoderResult;
 
 public class ValidityPeriodDecoderTest {
 
@@ -40,11 +40,11 @@ public class ValidityPeriodDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testValidityPeriod() throws DecoderException {
-		Taf taf = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
-		assertEquals(20, taf.getValidityPeriod().getFromDayOfMonth().intValue());
-		assertEquals(21, taf.getValidityPeriod().getFromHour().intValue());
-		assertEquals(21, taf.getValidityPeriod().getToDayOfMonth().intValue());
-		assertEquals(24, taf.getValidityPeriod().getToHour().intValue());
+		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
+		assertEquals(20, tdResult.getTaf().getValidityPeriod().getFromDayOfMonth().intValue());
+		assertEquals(21, tdResult.getTaf().getValidityPeriod().getFromHour().intValue());
+		assertEquals(21, tdResult.getTaf().getValidityPeriod().getToDayOfMonth().intValue());
+		assertEquals(24, tdResult.getTaf().getValidityPeriod().getToHour().intValue());
 	}
 
 }

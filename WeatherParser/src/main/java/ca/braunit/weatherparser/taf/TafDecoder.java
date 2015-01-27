@@ -56,39 +56,50 @@ public class TafDecoder {
 	 * @return a {@link Taf} object
 	 * @throws DecoderException in case of missing or unknown patterns.
 	 */
-	public static Taf decodeTaf(String weatherString) throws DecoderException {
-		return decodeObject(new StringBuffer(weatherString.trim()));
+	public static TafDecoderResult decodeTaf(String weatherString) throws DecoderException {
+		return decodeObject(new StringBuffer(CommonDecoder.prepareWeatherString(weatherString)));
 	}
 
-	private static Taf decodeObject(StringBuffer weatherSb) throws DecoderException {
+	private static TafDecoderResult decodeObject(StringBuffer weatherSb) throws DecoderException {
+		
+		TafDecoderResult tdResult = new TafDecoderResult();
+		
 		Taf taf = new Taf();
 		decodeReportType(taf, weatherSb);
 		decodeAirportIcaoCode(taf, weatherSb);
 		taf.setIssuanceTime(TimeInfoDecoder.decodeObject(weatherSb, true));
 		taf.setValidityPeriod(ValidityPeriodDecoder.decodeObject(weatherSb));
-		taf.setWind(WindDecoder.decodeObject(weatherSb));
-		taf.setVisibility(VisibilityDecoder.decodeObject(weatherSb));
-		taf.setForecastWeather(WeatherDecoder.decodeObject(weatherSb));
-		taf.setClouds(CloudsDecoder.decodeObject(weatherSb));
-		taf.setIcingConditions(IcingConditionsDecoder.decodeObject(weatherSb));
-		taf.setTurbulence(TurbulenceDecoder.decodeObject(weatherSb));
-		taf.setWindShear(WindShearDecoder.decodeObject(weatherSb));
-		taf.setMinimumAltimeterSettings(MinimumAltimeterSettingDecoder.decodeObject(weatherSb));
-		taf.setMaximumTemperature(TemperatureDecoder.decodeObject(weatherSb));
-		taf.setMinimumTemperature(TemperatureDecoder.decodeObject(weatherSb));
 		
-		//Has to be added 2nd time as for some location wind shear group might follow after minimum altimerter setting group
-		if (null == taf.getWindShear()) {
+		while(weatherSb.length() > 0) {
+		
+			taf.setWind(WindDecoder.decodeObject(weatherSb));
+			taf.setVisibility(VisibilityDecoder.decodeObject(weatherSb));
+			taf.setForecastWeather(WeatherDecoder.decodeObject(weatherSb));
+			taf.setClouds(CloudsDecoder.decodeObject(weatherSb));
+			taf.setIcingConditions(IcingConditionsDecoder.decodeObject(weatherSb));
+			taf.setTurbulence(TurbulenceDecoder.decodeObject(weatherSb));
 			taf.setWindShear(WindShearDecoder.decodeObject(weatherSb));
-		}
+			taf.setMinimumAltimeterSettings(MinimumAltimeterSettingDecoder.decodeObject(weatherSb));
+			taf.setMaximumTemperature(TemperatureDecoder.decodeObject(weatherSb));
+			taf.setMinimumTemperature(TemperatureDecoder.decodeObject(weatherSb));
+			
+			//Has to be added 2nd time as for some location wind shear group might follow after minimum altimerter setting group
+			if (null == taf.getWindShear()) {
+				taf.setWindShear(WindShearDecoder.decodeObject(weatherSb));
+			}
+			
+			taf.setExpectedChanges(ExpectedChangeDecoder.decodeObject(weatherSb, tdResult));
+
+			if (weatherSb.length() > 0) {
+				tdResult.addUnparsedToken(CommonDecoder.getContentToParse(weatherSb));
+				CommonDecoder.deleteParsedContent(weatherSb);
+			}
+
+		}		
 		
-		taf.setExpectedChanges(ExpectedChangeDecoder.decodeObject(weatherSb));
+		tdResult.setTaf(taf);
 		
-		if (weatherSb.length() > 0) {
-			taf.setUnparsedContent(weatherSb.toString());
-		}
-		
-		return taf;
+		return tdResult;
 	}
 
 	

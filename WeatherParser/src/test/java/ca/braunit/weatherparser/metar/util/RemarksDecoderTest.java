@@ -29,7 +29,7 @@ import org.junit.Test;
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.metar.ExampleMessagesMetar;
 import ca.braunit.weatherparser.metar.MetarDecoder;
-import ca.braunit.weatherparser.metar.domain.Metar;
+import ca.braunit.weatherparser.metar.MetarDecoderResult;
 
 public class RemarksDecoderTest {
 
@@ -39,9 +39,9 @@ public class RemarksDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testRemarks() throws DecoderException {
-		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
+		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
 		
-		assertEquals("SF3SC3SC2 SLP181", metar.getRemarks().getRemarks());
+		assertEquals("SF3SC3SC2 SLP181", mdResult.getMetar().getRemarks().getRemarks());
 		
 	}
 

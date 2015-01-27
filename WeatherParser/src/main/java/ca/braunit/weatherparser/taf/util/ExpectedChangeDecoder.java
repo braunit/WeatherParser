@@ -33,6 +33,7 @@ import ca.braunit.weatherparser.common.util.WeatherDecoder;
 import ca.braunit.weatherparser.common.util.WindDecoder;
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.metar.util.CommonDecoder;
+import ca.braunit.weatherparser.taf.TafDecoderResult;
 import ca.braunit.weatherparser.taf.domain.ExpectedChange;
 import ca.braunit.weatherparser.taf.domain.ExpectedChange.ChangeType;
 
@@ -45,7 +46,7 @@ public class ExpectedChangeDecoder {
 	private static final String TEMPORARY_PATTERN = "TEMPO (.)*";
 	private static final String PROBABILITY_PATTERN = "PROB[\\d]{2} (.)*";
 	
-	public static List<ExpectedChange> decodeObject(StringBuffer tafAsString) throws DecoderException {
+	public static List<ExpectedChange> decodeObject(StringBuffer tafAsString, TafDecoderResult tdResult) throws DecoderException {
 		List<ExpectedChange> expectedChanges = new ArrayList<ExpectedChange>();
 		
 		while(tafAsString.toString().matches(EXPECTED_CHANGE_PATTERN)) {
@@ -54,21 +55,30 @@ public class ExpectedChangeDecoder {
 			decodeChangeType(tafAsString, expectedChange);
 			decodeValidityPeriodOrFromTime(tafAsString, expectedChange);
 			
-			expectedChange.setWind(WindDecoder.decodeObject(tafAsString));
-			expectedChange.setVisibility(VisibilityDecoder.decodeObject(tafAsString));
-			expectedChange.setForecastWeather(WeatherDecoder.decodeObject(tafAsString));
-			expectedChange.setClouds(CloudsDecoder.decodeObject(tafAsString));
-			expectedChange.setIcingConditions(IcingConditionsDecoder.decodeObject(tafAsString));
-			expectedChange.setTurbulence(TurbulenceDecoder.decodeObject(tafAsString));
-			expectedChange.setWindShear(WindShearDecoder.decodeObject(tafAsString));
-			expectedChange.setMinimumAltimeterSettings(MinimumAltimeterSettingDecoder.decodeObject(tafAsString));
-			expectedChange.setMaximumTemperature(TemperatureDecoder.decodeObject(tafAsString));
-			expectedChange.setMinimumTemperature(TemperatureDecoder.decodeObject(tafAsString));
-			//Has to be added 2nd time as for some location wind shear group might follow after minimum altimerter setting group
-			if (null == expectedChange.getWindShear()) {
+			while(tafAsString.length() > 0 && !tafAsString.toString().matches(EXPECTED_CHANGE_PATTERN)) {
+			
+				expectedChange.setWind(WindDecoder.decodeObject(tafAsString));
+				expectedChange.setVisibility(VisibilityDecoder.decodeObject(tafAsString));
+				expectedChange.setForecastWeather(WeatherDecoder.decodeObject(tafAsString));
+				expectedChange.setClouds(CloudsDecoder.decodeObject(tafAsString));
+				expectedChange.setIcingConditions(IcingConditionsDecoder.decodeObject(tafAsString));
+				expectedChange.setTurbulence(TurbulenceDecoder.decodeObject(tafAsString));
 				expectedChange.setWindShear(WindShearDecoder.decodeObject(tafAsString));
+				expectedChange.setMinimumAltimeterSettings(MinimumAltimeterSettingDecoder.decodeObject(tafAsString));
+				expectedChange.setMaximumTemperature(TemperatureDecoder.decodeObject(tafAsString));
+				expectedChange.setMinimumTemperature(TemperatureDecoder.decodeObject(tafAsString));
+				//Has to be added 2nd time as for some location wind shear group might follow after minimum altimerter setting group
+				if (null == expectedChange.getWindShear()) {
+					expectedChange.setWindShear(WindShearDecoder.decodeObject(tafAsString));
+				}
+				
+				if (tafAsString.length() > 0 && !tafAsString.toString().matches(EXPECTED_CHANGE_PATTERN)) {
+					tdResult.addUnparsedToken(CommonDecoder.getContentToParse(tafAsString));
+					CommonDecoder.deleteParsedContent(tafAsString);
+				}
+				
 			}
-
+			
 			expectedChanges.add(expectedChange);
 		}
 		

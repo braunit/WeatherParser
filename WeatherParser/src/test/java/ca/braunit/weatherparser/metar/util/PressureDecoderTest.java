@@ -29,7 +29,7 @@ import org.junit.Test;
 import ca.braunit.weatherparser.exception.DecoderException;
 import ca.braunit.weatherparser.metar.ExampleMessagesMetar;
 import ca.braunit.weatherparser.metar.MetarDecoder;
-import ca.braunit.weatherparser.metar.domain.Metar;
+import ca.braunit.weatherparser.metar.MetarDecoderResult;
 
 public class PressureDecoderTest {
 
@@ -39,9 +39,9 @@ public class PressureDecoderTest {
 	 * @throws DecoderException
 	 */
 	public void testPressureInchOfMercury() throws DecoderException {
-		Metar metar = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
+		MetarDecoderResult mdResult = MetarDecoder.decodeMetar(ExampleMessagesMetar.METAR_EXAMPLE_1);
 		
-		assertEquals(1018, metar.getPressure().getPressure().intValue());
+		assertEquals(1018, mdResult.getMetar().getPressure().getPressure().intValue());
 		
 	}
 

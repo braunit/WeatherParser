@@ -41,7 +41,7 @@ public class Taf {
 	private ValidityPeriod validityPeriod;
 	
 	private Wind wind;
-	private Visibility visibility;
+	private List<Visibility> visibility;
 	private List<Clouds> clouds;
 	private List<Weather> forecastWeather;
 	
@@ -51,11 +51,9 @@ public class Taf {
 	private IcingConditions icingConditions;
 	private Turbulence turbulence;
 	private Pressure minimumAltimeterSettings;
-	private Temperature maximumTemperature; 
-	private Temperature minimumTemperature; 
-	
-	private String unparsedContent;
-	
+	private Temperature maximumTemperature;
+	private Temperature minimumTemperature;
+		
 	public boolean isUpdateOverPreviousReport() {
 		return updateOverPreviousReport;
 	}
@@ -96,11 +94,11 @@ public class Taf {
 		this.wind = wind;
 	}
 
-	public Visibility getVisibility() {
+	public List<Visibility> getVisibility() {
 		return visibility;
 	}
 
-	public void setVisibility(Visibility visibility) {
+	public void setVisibility(List<Visibility> visibility) {
 		this.visibility = visibility;
 	}
 
@@ -176,12 +174,4 @@ public class Taf {
 		this.minimumTemperature = minimumTemperature;
 	}
 
-	public String getUnparsedContent() {
-		return unparsedContent;
-	}
-
-	public void setUnparsedContent(String unparsedContent) {
-		this.unparsedContent = unparsedContent;
-	}
-	
 }
