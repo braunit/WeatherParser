@@ -35,6 +35,7 @@ import ca.braunit.weatherparser.metar.domain.Pressure;
 public class Taf {
 
 	private boolean updateOverPreviousReport = false;
+	private boolean correctedReport = false;
 	private String airportIcaoCode;
 	
 	private TimeInfo issuanceTime;
@@ -172,6 +173,14 @@ public class Taf {
 
 	public void setMinimumTemperature(Temperature minimumTemperature) {
 		this.minimumTemperature = minimumTemperature;
+	}
+
+	public boolean isCorrectedReport() {
+		return correctedReport;
+	}
+
+	public void setCorrectedReport(boolean correctedReport) {
+		this.correctedReport = correctedReport;
 	}
 
 }

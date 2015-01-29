@@ -52,6 +52,17 @@ public class TafDecoderTest {
 		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
 		assertEquals("CYVR", tdResult.getTaf().getAirportIcaoCode());
 	}
+	
+	@Test
+	/**
+	 * Check Corrected Report Decoding
+	 * 
+	 * @throws DecoderException
+	 */
+	public void testCorrectedReport() throws DecoderException {
+		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_3);
+		assertTrue(tdResult.getTaf().isCorrectedReport());
+	}
 
 	@Test
 	/**

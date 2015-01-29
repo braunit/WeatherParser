@@ -47,6 +47,7 @@ public class TafDecoder {
 
 	private static final String TAF = "TAF";
 	private static final String AMD = "AMD";
+	private static final String COR = "COR";
 	
 	private static final String ICAO_CODE_PATTERN = "[A-Za-z]{4}( |\\Z)(.)*";
 	
@@ -106,6 +107,10 @@ public class TafDecoder {
 	private static void decodeReportType(Taf taf, StringBuffer weatherSb) {
 		if (weatherSb.substring(0, TAF.length()).equals(TAF)) {
 			weatherSb.delete(0, TAF.length() + 1);
+		}
+		if (weatherSb.subSequence(0, COR.length()).equals(COR)) {
+			taf.setCorrectedReport(true);
+			weatherSb.delete(0, COR.length() + 1);
 		}
 		if (weatherSb.subSequence(0, AMD.length()).equals(AMD)) {
 			taf.setUpdateOverPreviousReport(true);
