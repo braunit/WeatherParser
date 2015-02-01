@@ -28,6 +28,8 @@ public class Temperature {
 
 	private Integer temperature;
 	private TimeInfo time;
+	private boolean maximumTemperature = false;
+	private boolean minimumTemperature = false;
 
 	public Integer getTemperature() {
 		return temperature;
@@ -40,6 +42,18 @@ public class Temperature {
 	}
 	public void setTime(TimeInfo time) {
 		this.time = time;
+	}
+	public boolean isMaximumTemperature() {
+		return maximumTemperature;
+	}
+	public void setMaximumTemperature(boolean maximumTemperature) {
+		this.maximumTemperature = maximumTemperature;
+	}
+	public boolean isMinimumTemperature() {
+		return minimumTemperature;
+	}
+	public void setMinimumTemperature(boolean minimumTemperature) {
+		this.minimumTemperature = minimumTemperature;
 	}
 	
 }

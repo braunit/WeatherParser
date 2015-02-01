@@ -81,8 +81,7 @@ public class TafDecoder {
 			taf.setTurbulence(TurbulenceDecoder.decodeObject(weatherSb));
 			taf.setWindShear(WindShearDecoder.decodeObject(weatherSb));
 			taf.setMinimumAltimeterSettings(MinimumAltimeterSettingDecoder.decodeObject(weatherSb));
-			taf.setMaximumTemperature(TemperatureDecoder.decodeObject(weatherSb));
-			taf.setMinimumTemperature(TemperatureDecoder.decodeObject(weatherSb));
+			taf.setTemperature(TemperatureDecoder.decodeObject(weatherSb));
 			
 			//Has to be added 2nd time as for some location wind shear group might follow after minimum altimerter setting group
 			if (null == taf.getWindShear()) {

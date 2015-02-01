@@ -50,8 +50,7 @@ public class ExpectedChange {
 	private IcingConditions icingConditions;
 	private Turbulence turbulence;
 	private Pressure minimumAltimeterSettings;
-	private Temperature maximumTemperature; 
-	private Temperature minimumTemperature; 
+	private List<Temperature> temperature; 
 
 	public TimeInfo getFromTime() {
 		return fromTime;
@@ -125,17 +124,11 @@ public class ExpectedChange {
 	public void setMinimumAltimeterSettings(Pressure minimumAltimeterSettings) {
 		this.minimumAltimeterSettings = minimumAltimeterSettings;
 	}
-	public Temperature getMaximumTemperature() {
-		return maximumTemperature;
+	public List<Temperature> getTemperature() {
+		return temperature;
 	}
-	public void setMaximumTemperature(Temperature maximumTemperature) {
-		this.maximumTemperature = maximumTemperature;
-	}
-	public Temperature getMinimumTemperature() {
-		return minimumTemperature;
-	}
-	public void setMinimumTemperature(Temperature minimumTemperature) {
-		this.minimumTemperature = minimumTemperature;
+	public void setTemperature(List<Temperature> temperature) {
+		this.temperature = temperature;
 	}
 
 	

@@ -65,8 +65,7 @@ public class ExpectedChangeDecoder {
 				expectedChange.setTurbulence(TurbulenceDecoder.decodeObject(tafAsString));
 				expectedChange.setWindShear(WindShearDecoder.decodeObject(tafAsString));
 				expectedChange.setMinimumAltimeterSettings(MinimumAltimeterSettingDecoder.decodeObject(tafAsString));
-				expectedChange.setMaximumTemperature(TemperatureDecoder.decodeObject(tafAsString));
-				expectedChange.setMinimumTemperature(TemperatureDecoder.decodeObject(tafAsString));
+				expectedChange.setTemperature(TemperatureDecoder.decodeObject(tafAsString));
 				//Has to be added 2nd time as for some location wind shear group might follow after minimum altimerter setting group
 				if (null == expectedChange.getWindShear()) {
 					expectedChange.setWindShear(WindShearDecoder.decodeObject(tafAsString));

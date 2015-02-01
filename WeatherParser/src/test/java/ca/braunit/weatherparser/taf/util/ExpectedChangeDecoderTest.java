@@ -60,13 +60,13 @@ public class ExpectedChangeDecoderTest {
 		
 		assertEquals(999, tdResult.getTaf().getExpectedChanges().get(1).getMinimumAltimeterSettings().getPressure().intValue());
 
-		assertEquals(10, tdResult.getTaf().getExpectedChanges().get(1).getMaximumTemperature().getTemperature().intValue());
-		assertEquals(21, tdResult.getTaf().getExpectedChanges().get(1).getMaximumTemperature().getTime().getDayOfMonth().intValue());
-		assertEquals(4, tdResult.getTaf().getExpectedChanges().get(1).getMaximumTemperature().getTime().getHour().intValue());
+		assertEquals(10, tdResult.getTaf().getExpectedChanges().get(1).getTemperature().get(0).getTemperature().intValue());
+		assertEquals(21, tdResult.getTaf().getExpectedChanges().get(1).getTemperature().get(0).getTime().getDayOfMonth().intValue());
+		assertEquals(4, tdResult.getTaf().getExpectedChanges().get(1).getTemperature().get(0).getTime().getHour().intValue());
 
-		assertEquals(-5, tdResult.getTaf().getExpectedChanges().get(1).getMinimumTemperature().getTemperature().intValue());
-		assertEquals(21, tdResult.getTaf().getExpectedChanges().get(1).getMinimumTemperature().getTime().getDayOfMonth().intValue());
-		assertEquals(6, tdResult.getTaf().getExpectedChanges().get(1).getMinimumTemperature().getTime().getHour().intValue());
+		assertEquals(-5, tdResult.getTaf().getExpectedChanges().get(1).getTemperature().get(1).getTemperature().intValue());
+		assertEquals(21, tdResult.getTaf().getExpectedChanges().get(1).getTemperature().get(1).getTime().getDayOfMonth().intValue());
+		assertEquals(6, tdResult.getTaf().getExpectedChanges().get(1).getTemperature().get(1).getTime().getHour().intValue());
 		
 	}
 

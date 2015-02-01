@@ -52,8 +52,7 @@ public class Taf {
 	private IcingConditions icingConditions;
 	private Turbulence turbulence;
 	private Pressure minimumAltimeterSettings;
-	private Temperature maximumTemperature;
-	private Temperature minimumTemperature;
+	private List<Temperature> temperature;
 		
 	public boolean isUpdateOverPreviousReport() {
 		return updateOverPreviousReport;
@@ -159,20 +158,12 @@ public class Taf {
 		this.minimumAltimeterSettings = minimumAltimeterSettings;
 	}
 
-	public Temperature getMaximumTemperature() {
-		return maximumTemperature;
+	public List<Temperature> getTemperature() {
+		return temperature;
 	}
 
-	public void setMaximumTemperature(Temperature maximumTemperature) {
-		this.maximumTemperature = maximumTemperature;
-	}
-
-	public Temperature getMinimumTemperature() {
-		return minimumTemperature;
-	}
-
-	public void setMinimumTemperature(Temperature minimumTemperature) {
-		this.minimumTemperature = minimumTemperature;
+	public void setTemperature(List<Temperature> temperature) {
+		this.temperature = temperature;
 	}
 
 	public boolean isCorrectedReport() {

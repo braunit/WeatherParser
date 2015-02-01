@@ -22,6 +22,9 @@
  */
 package ca.braunit.weatherparser.taf.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ca.braunit.weatherparser.taf.domain.Temperature;
 import ca.braunit.weatherparser.util.WeatherParserConstants;
 import ca.braunit.weatherparser.common.domain.TimeInfo;
@@ -29,16 +32,29 @@ import ca.braunit.weatherparser.metar.util.CommonDecoder;
 
 public class TemperatureDecoder {
 	
-	private static final String TEMPERATURE_PATTERN = "T(M)?(\\d){2}/(\\d){4}(z|Z)( |\\Z)(.)*";
+	private static final String MAXIMUM_TEMPERATURE = "X";
+	private static final String MINIMUM_TEMPERATURE = "N";
 	
-	public static Temperature decodeObject(StringBuffer tafAsString) {
+	private static final String TEMPERATURE_PATTERN = "T(N|X)?(M)?(\\d){2}/(\\d){4}(z|Z)( |\\Z)(.)*";
+	
+	public static List<Temperature> decodeObject(StringBuffer tafAsString) {
 
+		List<Temperature> tempList = new ArrayList<Temperature>();
+		
 		Temperature temperature = null;		
-		if (tafAsString.toString().matches(TEMPERATURE_PATTERN)) {
+		while (tafAsString.toString().matches(TEMPERATURE_PATTERN)) {
 			temperature = new Temperature();
 			
 			tafAsString.delete(0, 1);
 			int multiplier = 1;
+			if (tafAsString.toString().startsWith(MAXIMUM_TEMPERATURE)) {
+				temperature.setMaximumTemperature(true);
+				tafAsString.delete(0, 1);
+			}
+			if (tafAsString.toString().startsWith(MINIMUM_TEMPERATURE)) {
+				temperature.setMinimumTemperature(true);
+				tafAsString.delete(0, 1);
+			}
 			if (tafAsString.toString().startsWith(WeatherParserConstants.NEGATIVE_VALUE_CODE)) {
 				multiplier = -1;
 				tafAsString.delete(0, 1);
@@ -54,8 +70,10 @@ public class TemperatureDecoder {
 			temperature.setTime(time);
 			
 			CommonDecoder.deleteParsedContent(tafAsString);
+			
+			tempList.add(temperature);
 		}
-		return temperature;
+		return tempList;
 
 	}
 
