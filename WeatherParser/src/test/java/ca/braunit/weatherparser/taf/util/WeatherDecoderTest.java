@@ -20,18 +20,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ca.braunit.weatherparser.taf;
+package ca.braunit.weatherparser.taf.util;
 
-public class ExampleMessagesTaf {
+import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
+
+import ca.braunit.weatherparser.exception.DecoderException;
+import ca.braunit.weatherparser.taf.ExampleMessagesTaf;
+import ca.braunit.weatherparser.taf.TafDecoder;
+import ca.braunit.weatherparser.taf.TafDecoderResult;
+
+public class WeatherDecoderTest {
+
+	@Test
 	/**
-	 * Update over previous report
+	 * Check Weather Decoding (No Significant Weather)
+	 * 
+	 * @throws DecoderException
 	 */
-	public static final String TAF_EXAMPLE_1 = "TAF AMD CYVR 202100Z 2021/2124 35005KT P6SM FEW007 SCT250 WS010/18040KT FM202200 35006KT P6SM SCT250 WS020/18040KT FM210400 04006KT 1 1/2SM SKC 620304 520204 QNH2950INS T10/2104Z TM05/2106Z WSCONDS FM211000 05006KT 3SM BR SCT250 TEMPO 2111/2115 1/4SM FG VV001 FM211700 09004KT P6SM BKN250";
-	
-	public static final String TAF_EXAMPLE_2 = "TAF AMD CYVR 031522Z 0315/0415 AAAA 34006KT 9999 MIFG FEW005 BKN015 PROB40 TEMPO 0315/0324 BBBB 5000 BR BKN010 BECMG 0401/0403 03018KT BECMG 0406/0408 CAVOK";
+	public void testNoSignificantWeather() throws DecoderException {
+		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_4);
+		
+		assertTrue(tdResult.getTaf().getExpectedChanges().get(0).getForecastWeather().get(0).isNoSignificantWeather());
+	}
 
-	public static final String TAF_EXAMPLE_3 = "TAF COR CYVR 130331Z 1303/1403 21015KT 4000 BR BKN003 OVC005";
 	
-	public static final String TAF_EXAMPLE_4 = "TAF CYVR 130507Z 1306/1406 03005KT 9999 FEW035 BKN050 TX14/1316Z TN10/1404Z TEMPO 1306/1312 NSW BKN015 OVC025 BECMG 1322/1324 BKN015 OVC025 PROB40 1400/1406 4000 DZ BR OVC010";
 }

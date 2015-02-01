@@ -50,10 +50,11 @@ public class Weather {
 	//Combination if precipitation, obscuration and other
 	private String weatherPhenomena;
 	
-	private boolean onStation;
-	private boolean inTheVicinity;
-	private boolean inTheDistant;
-
+	private boolean onStation = false;
+	private boolean inTheVicinity = false;
+	private boolean inTheDistant = false;
+	private boolean noSignificantWeather = false;
+	
 	public String getIntensityCode() {
 		return intensityCode;
 	}
@@ -137,6 +138,12 @@ public class Weather {
 	}
 	public void setInTheDistant(boolean inTheDistant) {
 		this.inTheDistant = inTheDistant;
+	}
+	public boolean isNoSignificantWeather() {
+		return noSignificantWeather;
+	}
+	public void setNoSignificantWeather(boolean noSignificantWeather) {
+		this.noSignificantWeather = noSignificantWeather;
 	}
 
 }
