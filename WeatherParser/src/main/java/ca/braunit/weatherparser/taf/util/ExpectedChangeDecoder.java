@@ -87,20 +87,24 @@ public class ExpectedChangeDecoder {
 	private static void decodeChangeType(StringBuffer tafAsString, ExpectedChange expectedChange) {
 		if (tafAsString.toString().matches(FROM_PATTERN)) {
 			expectedChange.setChangeType(ChangeType.FROM);
+			expectedChange.setChangeTypeCode("FM");
 			tafAsString.delete(0, 2);
 		} else if (tafAsString.toString().matches(BECOMING_PATTERN)) {
 			expectedChange.setChangeType(ChangeType.BECOMING);
+			expectedChange.setChangeTypeCode("BECMG");
 			CommonDecoder.deleteParsedContent(tafAsString);
 		} else if (tafAsString.toString().matches(TEMPORARY_PATTERN)) {
 			expectedChange.setChangeType(ChangeType.TEMPORARY);
+			expectedChange.setChangeTypeCode("TEMPO");
 			CommonDecoder.deleteParsedContent(tafAsString);
 		} else if (tafAsString.toString().matches(PROBABILITY_PATTERN)) {
 			expectedChange.setChangeType(ChangeType.PROBABILITY);
+			expectedChange.setChangeTypeCode("PROB");
 			tafAsString.delete(0, 4);
 			decodeProbability(tafAsString, expectedChange);
 		}
 	}
-	
+
 	private static void decodeProbability(StringBuffer tafAsString, ExpectedChange expectedChange) {
 		expectedChange.setProbabilityOfChange(Integer.parseInt(tafAsString.substring(0, 2)));
 		CommonDecoder.deleteParsedContent(tafAsString);

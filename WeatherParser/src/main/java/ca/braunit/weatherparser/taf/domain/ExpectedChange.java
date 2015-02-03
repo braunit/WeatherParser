@@ -39,6 +39,7 @@ public class ExpectedChange {
 	private TimeInfo fromTime;
 	private ValidityPeriod validityPeriod;
 	private ChangeType changeType;
+	private String changeTypeCode;
 	private Integer probabilityOfChange;
 	
 	private Wind wind;
@@ -87,6 +88,13 @@ public class ExpectedChange {
 	}
 	public void setChangeType(ChangeType changeType) {
 		this.changeType = changeType;
+	}
+	
+	public String getChangeTypeCode() {
+		return changeTypeCode;
+	}
+	public void setChangeTypeCode(String changeTypeCode) {
+		this.changeTypeCode = changeTypeCode;
 	}
 	public Integer getProbabilityOfChange() {
 		return probabilityOfChange;
