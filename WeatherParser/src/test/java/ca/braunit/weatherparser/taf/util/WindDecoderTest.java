@@ -23,6 +23,7 @@
 package ca.braunit.weatherparser.taf.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -35,15 +36,29 @@ public class WindDecoderTest {
 	
 	@Test
 	/**
-	 * Check Validity Period Decoding
+	 * Check Wind and Direction Decoding
 	 * 
 	 * @throws DecoderException
 	 */
-	public void testValidityPeriod() throws DecoderException {
+	public void testWindAndDirection() throws DecoderException {
 		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_1);
 		assertEquals("KT", tdResult.getTaf().getWind().getSpeedUnitOfMeasure());
 		assertEquals(350, tdResult.getTaf().getWind().getWindDirection().intValue());
 		assertEquals(5, tdResult.getTaf().getWind().getWindSpeed().intValue());
+	}
+
+	@Test
+	/**
+	 * Check Validity Period Decoding
+	 * 
+	 * @throws DecoderException
+	 */
+	public void testVariableWind() throws DecoderException {
+		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_6);
+		assertEquals("KT", tdResult.getTaf().getWind().getSpeedUnitOfMeasure());
+		assertEquals(25, tdResult.getTaf().getWind().getWindSpeedGusts().intValue());
+		assertEquals(15, tdResult.getTaf().getWind().getWindSpeed().intValue());
+		assertTrue(tdResult.getTaf().getWind().isVariableWind());
 	}
 
 }

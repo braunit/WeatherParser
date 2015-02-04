@@ -32,7 +32,7 @@ import ca.braunit.weatherparser.metar.util.CommonDecoder;
 
 public class CloudsDecoder {
 
-	private static final String CLOUDS_PATTERN = "((([a-zA-Z]){3}(\\d){3}(TCU|CB|ACC)?)|(([vV]){2}(\\d){3})|NCS|NCD|SKC)( |\\Z)(.)*";
+	private static final String CLOUDS_PATTERN = "((([a-zA-Z]){3}(\\d){3}(TCU|CB|ACC)?)|(([vV]){2}(\\d){3})|NSC|NCD|SKC)( |\\Z)(.)*";
 
 	private static final String CLOUD_AMOUNT_AND_HEIGHT_PATTERN = "(([a-zA-Z]){3}(\\d){3}(TCU|CB|ACC)?)( |\\Z)(.)*";
 	private static final String VERTICAL_VISIBILITY_PATTERN = "(([vV]){2}(\\d){3})( |\\Z)(.)*";

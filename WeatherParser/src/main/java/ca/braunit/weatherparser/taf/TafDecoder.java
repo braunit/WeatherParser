@@ -83,7 +83,7 @@ public class TafDecoder {
 			taf.setMinimumAltimeterSettings(MinimumAltimeterSettingDecoder.decodeObject(weatherSb));
 			taf.setTemperature(TemperatureDecoder.decodeObject(weatherSb));
 			
-			//Has to be added 2nd time as for some location wind shear group might follow after minimum altimerter setting group
+			//Has to be added 2nd time as for some location wind shear group might follow after minimum altimeter setting group
 			if (null == taf.getWindShear()) {
 				taf.setWindShear(WindShearDecoder.decodeObject(weatherSb));
 			}

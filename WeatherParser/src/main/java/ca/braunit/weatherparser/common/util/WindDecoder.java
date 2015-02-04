@@ -36,6 +36,7 @@ public class WindDecoder {
 	private static final String WIND_WITH_GUSTS_PATTERN = "[\\d]{5}(G)[\\d]{2}(KMH|MPS|KT)( |\\Z)(.)*";
 	private static final String VARIABLE_WIND_PATTERN = "[\\d]{3}V[\\d]{3}( |\\Z)(.)*";
 	private static final String VARIABLE_LIGHT_WIND_PATTERN = "VRB[\\d]{2}KT( |\\Z)(.)*";
+	private static final String VARIABLE_WIND_WITH_GUSTS_PATTERN = "VRB[\\d]{2}((G)[\\d]{2})?KT( |\\Z)(.)*";
 	
 	public static Wind decodeObject(StringBuffer metarAsString) {
 		Wind wind = new Wind();
@@ -48,6 +49,8 @@ public class WindDecoder {
 			decodeVariableWindDirection(metarAsString, wind);			
 		} else if (metarAsString.toString().matches(VARIABLE_LIGHT_WIND_PATTERN)) {
 			decodeLightVariableWind(metarAsString, wind);
+		} else if (metarAsString.toString().matches(VARIABLE_WIND_WITH_GUSTS_PATTERN)) {
+			decodeVariableWindWithGusts(metarAsString, wind);
 		}
 		return wind;
 	}
@@ -95,6 +98,15 @@ public class WindDecoder {
 		metarAsString.delete(0, 3);
 		wind.setVariableWind(true);
 		wind.setWindSpeed(Integer.parseInt(metarAsString.substring(0, WINDSPEED_LENGTH)));
+		metarAsString.delete(0, 2);
+		decodeSpeedUnitOfMeasure(metarAsString, wind);
+	}
+	private static void decodeVariableWindWithGusts(StringBuffer metarAsString, Wind wind) {
+		metarAsString.delete(0, 3);
+		wind.setVariableWind(true);
+		wind.setWindSpeed(Integer.parseInt(metarAsString.substring(0, WINDSPEED_LENGTH)));
+		metarAsString.delete(0, 3);
+		wind.setWindSpeedGusts(Integer.parseInt(metarAsString.substring(0, WINDSPEED_LENGTH)));
 		metarAsString.delete(0, 2);
 		decodeSpeedUnitOfMeasure(metarAsString, wind);
 	}

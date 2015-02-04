@@ -60,6 +60,10 @@ public class ExpectedChangeDecoder {
 				expectedChange.setWind(WindDecoder.decodeObject(tafAsString));
 				expectedChange.setVisibility(VisibilityDecoder.decodeObject(tafAsString));
 				expectedChange.setForecastWeather(WeatherDecoder.decodeObject(tafAsString));
+				//Has to be added 2nd time as sometimes visibility is provided after weather group
+				if (null == expectedChange.getVisibility()) {
+					expectedChange.setVisibility(VisibilityDecoder.decodeObject(tafAsString));
+				}
 				expectedChange.setClouds(CloudsDecoder.decodeObject(tafAsString));
 				expectedChange.setIcingConditions(IcingConditionsDecoder.decodeObject(tafAsString));
 				expectedChange.setTurbulence(TurbulenceDecoder.decodeObject(tafAsString));
@@ -102,6 +106,9 @@ public class ExpectedChangeDecoder {
 			expectedChange.setChangeTypeCode("PROB");
 			tafAsString.delete(0, 4);
 			decodeProbability(tafAsString, expectedChange);
+			if (tafAsString.toString().matches(EXPECTED_CHANGE_PATTERN)) {
+				decodeChangeType(tafAsString, expectedChange);
+			}
 		}
 	}
 

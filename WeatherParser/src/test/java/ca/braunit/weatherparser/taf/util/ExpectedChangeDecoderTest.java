@@ -80,9 +80,9 @@ public class ExpectedChangeDecoderTest {
 	public void testEmptyProbability() throws DecoderException {
 		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_2);
 		
-		assertEquals(ChangeType.PROBABILITY, tdResult.getTaf().getExpectedChanges().get(0).getChangeType());
-
-		assertEquals(ChangeType.TEMPORARY, tdResult.getTaf().getExpectedChanges().get(1).getChangeType());
+		assertEquals(ChangeType.TEMPORARY, tdResult.getTaf().getExpectedChanges().get(0).getChangeType());
+		assertEquals(40, tdResult.getTaf().getExpectedChanges().get(0).getProbabilityOfChange().intValue());
+		
 		
 		assertEquals("AAAA", tdResult.getUnparsedTokens().get(0));
 		assertEquals("BBBB", tdResult.getUnparsedTokens().get(1));
@@ -90,5 +90,18 @@ public class ExpectedChangeDecoderTest {
 	}
 
 	
+	@Test
+	/**
+	 * Check ExpectedChange Decoding probability
+	 * 
+	 * @throws DecoderException
+	 */
+	public void testProbability() throws DecoderException {
+		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_5);
+		
+		assertEquals(ChangeType.PROBABILITY, tdResult.getTaf().getExpectedChanges().get(4).getChangeType());
+		assertEquals(30, tdResult.getTaf().getExpectedChanges().get(4).getProbabilityOfChange().intValue());
+			
+	}
 	
 }
