@@ -75,9 +75,9 @@ public class ExpectedChangeDecoder {
 					expectedChange.setWindShear(WindShearDecoder.decodeObject(tafAsString));
 				}
 				
-				if (tafAsString.length() > 0 && !tafAsString.toString().matches(EXPECTED_CHANGE_PATTERN)) {
+				while (tafAsString.length() > 0 && !tafAsString.toString().matches(EXPECTED_CHANGE_PATTERN)) {
 					tdResult.addUnparsedToken(CommonDecoder.getContentToParse(tafAsString));
-					CommonDecoder.deleteParsedContent(tafAsString);
+					CommonDecoder.deleteParsedContent(tafAsString);					
 				}
 				
 			}

@@ -104,4 +104,18 @@ public class ExpectedChangeDecoderTest {
 			
 	}
 	
+	@Test
+	/**
+	 * 
+	 * Check ExpectedChange, only WInd Information available
+	 * 
+	 * @throws DecoderException
+	 */
+	public void testBecomingWindChangeOnly() throws DecoderException {
+		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_7);
+		
+		assertEquals(ChangeType.BECOMING, tdResult.getTaf().getExpectedChanges().get(0).getChangeType());
+		
+	}
+	
 }
