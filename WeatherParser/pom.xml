@@ -4,7 +4,7 @@
 
 	<groupId>ca.braunit.weatherparser</groupId>
 	<artifactId>WeatherParser</artifactId>
-	<version>0.1.8</version>
+	<version>0.2.0</version>
 	<packaging>jar</packaging>
 
 	<name>WeatherParser</name>
