@@ -107,7 +107,7 @@ public class ExpectedChangeDecoderTest {
 	@Test
 	/**
 	 * 
-	 * Check ExpectedChange, only WInd Information available
+	 * Check ExpectedChange, only Wind Information available
 	 * 
 	 * @throws DecoderException
 	 */
@@ -115,6 +115,9 @@ public class ExpectedChangeDecoderTest {
 		TafDecoderResult tdResult = TafDecoder.decodeTaf(ExampleMessagesTaf.TAF_EXAMPLE_7);
 		
 		assertEquals(ChangeType.BECOMING, tdResult.getTaf().getExpectedChanges().get(0).getChangeType());
+		assertEquals(WeatherParserConstants.UNIT_OF_MEASURE_KNOTS, tdResult.getTaf().getExpectedChanges().get(0).getWind().getSpeedUnitOfMeasure());
+		assertEquals(10, tdResult.getTaf().getExpectedChanges().get(0).getWind().getWindSpeed().intValue());
+		assertEquals(240, tdResult.getTaf().getExpectedChanges().get(0).getWind().getWindDirection().intValue());
 		
 	}
 	
